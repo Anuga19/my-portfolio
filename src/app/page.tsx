@@ -91,13 +91,17 @@ export default function Home() {
             >
               Crafting <DecryptedText text={rotatingWords[wordIndex]} /><br />Through Intentional Design
             </h1>
-            <button
+            <a
+              href="https://www.linkedin.com/in/anuga-karunatilaka"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
               style={{
                 background: "#15161C",
                 color: "#fff",
                 border: "none",
                 borderRadius: 14,
+                textDecoration: "none",
                 padding: "0 22px",
                 height: 40,
                 display: "inline-flex",
@@ -111,7 +115,7 @@ export default function Home() {
               }}
             >
               Get in touch
-            </button>
+            </a>
           </div>
 
           {/* Green dot tree — absolutely positioned, desktop only */}
@@ -483,13 +487,17 @@ export default function Home() {
                 I partner with teams to simplify complexity, clarify experiences<br />and deliver with confidence.
               </p>
             </div>
-            <button
+            <a
+              href="https://www.linkedin.com/in/anuga-karunatilaka"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
               style={{
                 background: "#15161C",
                 color: "#fff",
                 border: "none",
                 borderRadius: 14,
+                textDecoration: "none",
                 padding: "0 22px",
                 height: 40,
                 display: "inline-flex",
@@ -504,7 +512,7 @@ export default function Home() {
               }}
             >
               Get in touch
-            </button>
+            </a>
           </div>
 
           {/* Pink dot tree */}
