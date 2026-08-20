@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Inter:wght@400..700&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -375,5 +375,139 @@ a.link-blue:hover {
   .cta-section {
     height: auto !important;
     padding: 40px 20px 260px 20px !important;
+  }
+}
+
+/* ── CASE STUDY PAGE (TOC layout) ── */
+.case-page-wrapper {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background: #FFFFFF;
+}
+
+.case-page-inner {
+  display: flex;
+  gap: 48px;
+  width: 988px;
+  flex-shrink: 0;
+}
+
+.case-toc-desktop {
+  width: 190px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: calc(50vw - 494px);
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 99px;
+  padding-bottom: 40px;
+  z-index: 10;
+}
+
+.case-toc-spacer {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.case-toc-hamburger {
+  display: none;
+}
+
+.case-toc-overlay {
+  display: none;
+}
+
+.case-content {
+  width: 750px;
+  flex-shrink: 0;
+  padding: 96px 0 42px 0;
+}
+
+.case-section {
+  scroll-margin-top: 32px;
+}
+
+@media (max-width: 1100px) {
+  .case-toc-desktop {
+    left: 24px;
+  }
+}
+
+@media (max-width: 860px) {
+  .case-page-inner {
+    width: 100%;
+  }
+
+  .case-toc-desktop {
+    display: none;
+  }
+
+  .case-toc-spacer {
+    display: none;
+  }
+
+  .case-toc-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: #fff;
+    border: 1px solid #E4E5E5;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .case-toc-hamburger span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: #15161C;
+    border-radius: 2px;
+  }
+
+  .case-toc-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 200;
+  }
+
+  .case-toc-drawer {
+    width: 260px;
+    height: 100vh;
+    background: #fff;
+    padding: 72px 24px 40px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .case-content {
+    width: 100%;
+    flex-shrink: 1;
+    padding: 88px 20px 42px 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .case-content img {
+    max-width: 100%;
+  }
+
+  .case-hero-title {
+    font-size: 28px !important;
+    line-height: 34px !important;
   }
 }
