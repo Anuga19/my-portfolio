@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,6 +16,11 @@ const navLinks = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const sidebarContent = (
     <>
@@ -102,13 +108,12 @@ export default function Sidebar() {
     </>
   );
 
-  return (
+  const fixedUi = (
     <>
       {/* ── DESKTOP SIDEBAR ── */}
       <aside className="sidebar-desktop">
         {sidebarContent}
       </aside>
-      <div className="sidebar-spacer" />
 
       {/* ── MOBILE HAMBURGER BUTTON ── */}
       <button
@@ -128,6 +133,16 @@ export default function Sidebar() {
           </div>
         </div>
       )}
+    </>
+  );
+
+  return (
+    <>
+      {/* Fixed-position UI is portaled to document.body so it isn't
+          trapped inside GSAP ScrollSmoother's transformed content,
+          which would otherwise break its position: fixed behavior. */}
+      {mounted ? createPortal(fixedUi, document.body) : fixedUi}
+      <div className="sidebar-spacer" />
     </>
   );
 }

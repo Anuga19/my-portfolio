@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ClickSound from "@/components/ClickSound";
+import SmoothScroll from "@/components/SmoothScroll";
 import { Analytics } from "@vercel/analytics/next";
 
 const mondwest = localFont({
@@ -30,7 +31,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={mondwest.variable}>
-      <body className={datatype.variable}><ClickSound />{children}<Analytics /></body>
+      <body className={datatype.variable}>
+        <ClickSound />
+        <SmoothScroll>{children}</SmoothScroll>
+        <Analytics />
+      </body>
     </html>
   );
 }

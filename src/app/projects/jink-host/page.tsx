@@ -42,6 +42,60 @@ const CaseImage = ({ src, alt, padded = false }: { src: string; alt: string; pad
   </div>
 );
 
+const beforeAfterNotes: { left: number; top: number; width: number; heading: string; body: string }[] = [
+  { left: 3.2, top: 10.12, width: 10.93, heading: "Generic positioning", body: "Product isn't immediately clear." },
+  { left: 25.6, top: 10.12, width: 24.27, heading: "Little visual context", body: "The hero relies almost entirely on typography and copy to explain the product." },
+  { left: 63.2, top: 12.29, width: 18.67, heading: "Clearer product proposition", body: "VPS is immediately clear." },
+  { left: 4, top: 79.52, width: 15.2, heading: "Benefits bundled together", body: "Harder to scan." },
+  { left: 79.6, top: 79.76, width: 13.2, heading: "Easier to scan value", body: "Key points are separated." },
+];
+
+const beforeAfterLines: { x1: number; y1: number; x2: number; y2: number }[] = [
+  { x1: 80, y1: 94, x2: 169, y2: 171 },
+  { x1: 248, y1: 89, x2: 243, y2: 148 },
+  { x1: 513, y1: 86, x2: 486, y2: 158 },
+  { x1: 646, y1: 325, x2: 544, y2: 224 },
+  { x1: 646, y1: 325, x2: 626, y2: 290 },
+  { x1: 100, y1: 316, x2: 155, y2: 207 },
+];
+
+const BeforeAfterCard = () => (
+  <div style={{ containerType: "inline-size", width: "100%", aspectRatio: "750 / 415", position: "relative", overflow: "hidden", borderRadius: 12, border: "1px solid #E2E2E2", background: "#FBFBFB" }}>
+    <svg viewBox="0 0 750 415" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+      <defs>
+        <clipPath id="beforeShotClip"><rect x={51} y={115} width={315} height={175} rx={6} /></clipPath>
+        <clipPath id="afterShotClip"><rect x={392} y={115} width={304} height={175} rx={6} /></clipPath>
+        <marker id="beforeAfterArrow" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#FF0000" />
+        </marker>
+      </defs>
+      <g clipPath="url(#beforeShotClip)">
+        <image href="/images/jink-host/before-landing.png" x={51} y={115} width={315} height={175} preserveAspectRatio="xMidYMid slice" />
+      </g>
+      <g clipPath="url(#afterShotClip)">
+        <image href="/images/jink-host/after-landing.png" x={392} y={115} width={304} height={175} preserveAspectRatio="xMidYMid slice" />
+      </g>
+      <rect x={84} y={148} width={248} height={105} rx={5} fill="none" stroke="#FF0000" strokeWidth={1} />
+      {beforeAfterLines.map((l, i) => (
+        <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke="#FF0000" strokeWidth={1.3} markerEnd="url(#beforeAfterArrow)" />
+      ))}
+    </svg>
+
+    {[{ label: "Old landing page", left: 27 }, { label: "Redesigned landing page", left: 72.6 }].map((c) => (
+      <p key={c.label} style={{ position: "absolute", left: `${c.left}%`, top: "74.46%", transform: "translateX(-50%)", fontFamily: "Archivo, sans-serif", fontWeight: 400, fontSize: "1.07cqw", color: "#000", textTransform: "uppercase", letterSpacing: "0.16px", whiteSpace: "nowrap" }}>
+        {c.label}
+      </p>
+    ))}
+
+    {beforeAfterNotes.map((n) => (
+      <div key={n.heading} style={{ position: "absolute", left: `${n.left}%`, top: `${n.top}%`, width: `${n.width}%`, display: "flex", flexDirection: "column", gap: "0.4cqw" }}>
+        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: "1.2cqw", lineHeight: 1.2, color: "#000" }}>{n.heading}</p>
+        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "1.07cqw", lineHeight: 1.4, color: "#000" }}>{n.body}</p>
+      </div>
+    ))}
+  </div>
+);
+
 export default function JinkHost() {
   return (
     <div className="case-page-wrapper">
@@ -103,7 +157,7 @@ export default function JinkHost() {
                 <P>The brief came with a fairly broad product offering.</P>
                 <P>VPS and RDP were the main focus, but the website also needed to introduce dedicated servers, cloud storage and domains. The client also wanted to highlight EU and USA server locations, Budget and Premium CPU options and a custom VPS configuration.</P>
 
-                <CaseImage src="/images/jink-host/before-after-flat.png" alt="Comparison of the old and redesigned Jink Host landing page hero: the old version had generic positioning, little visual context and bundled benefits, while the redesign has a clearer product proposition and easier-to-scan value points" />
+                <BeforeAfterCard />
 
                 <P>Every one of these things could become a section. <span style={{ fontWeight: 600 }}>But giving everything the same visual weight would make the page harder to understand.</span></P>
                 <P>So I started with a simpler question.</P>

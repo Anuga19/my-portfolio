@@ -17,12 +17,6 @@ const socialLinks = [
   { label: "Behance", href: "https://www.behance.net/anugakarunat" },
 ];
 
-const caseStudyPoints = [
-  { bg: "rgb(236,245,255)", label: "Identified a hidden user pain point" },
-  { bg: "rgb(255,238,240)", label: "Reduced friction in a key workflow" },
-  { bg: "rgb(244,239,254)", label: "Improved task completion and clarity" },
-];
-
 const toolkitCategories = [
   {
     name: "Design",
@@ -255,12 +249,14 @@ export default function Home() {
               >
                 {/* Card image */}
                 <div
+                  className="card-media"
                   style={{
                     width: "100%",
                     height: 280,
                     borderRadius: 12,
                     border: "1px solid #E8EAED",
                     overflow: "hidden",
+                    position: "relative",
                   }}
                 >
                   <img
@@ -268,6 +264,7 @@ export default function Home() {
                     alt={p.title}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
+                  <div className="card-overlay" />
                 </div>
                 {/* Card text */}
                 <div
@@ -279,6 +276,7 @@ export default function Home() {
                   }}
                 >
                   <p
+                    className="card-title"
                     style={{
                       fontFamily: "Inter, sans-serif",
                       fontWeight: 500,
@@ -291,6 +289,7 @@ export default function Home() {
                     {p.title}
                   </p>
                   <p
+                    className="card-desc"
                     style={{
                       fontFamily: "Inter, sans-serif",
                       fontWeight: 300,
@@ -309,70 +308,42 @@ export default function Home() {
         </section>
 
         {/* ── CASE STUDY ───────────────────────────────────── */}
-        <section
+        <Link
+          href="/projects/torch-proxies"
+          className="work-card"
           style={{
+            display: "block",
             width: 700,
             padding: "48px 24px 20px 24px",
             borderBottom: "1px dashed #E4E5E5",
-            cursor: "pointer",
+            textDecoration: "none",
+            boxSizing: "border-box",
           }}
         >
-          {/* Title — full width */}
-          <h3
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: 20,
-              fontWeight: 500,
-              color: "#15161C",
-              lineHeight: "28px",
-              letterSpacing: "-0.4px",
-              marginBottom: 12,
-            }}
-          >
-            Preventing user drop off
-          </h3>
-
-          {/* Description — full width */}
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: 14,
-              fontWeight: 400,
-              color: "#6B7280",
-              lineHeight: "22px",
-              marginBottom: 36,
-            }}
-          >
-            Removed a key friction point in the proxy generation flow by making data
-            availability clear and actionable.
-          </p>
-
-          {/* Bullets + Dashboard side by side, top-aligned */}
-          <div className="case-study-row" style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-            <div className="case-study-bullets" style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16 }}>
-              {[
-                { icon: "/icon-blue.svg", label: "Identified a hidden user pain point" },
-                { icon: "/icon-red.svg", label: "Reduced friction in a key workflow" },
-                { icon: "/icon-purple.svg", label: "Improved task completion and clarity" },
-              ].map((pt) => (
-                <div key={pt.label} style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                  <img src={pt.icon} width={28} height={28} alt="" style={{ flexShrink: 0 }} />
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: 15, fontWeight: 500, color: "#1F2025" }}>{pt.label}</span>
-                </div>
-              ))}
-              <Link
-                href="/coming-soon"
-                style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, color: "#1C8AF8", textDecoration: "none", letterSpacing: "-0.02em", marginTop: 16 }}
-              >
-                Read more →
-              </Link>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {/* Screenshot card */}
+            <div className="card-media" style={{ width: "100%", aspectRatio: "702 / 412", position: "relative", overflow: "hidden", borderRadius: 6, border: "0.5px solid #E4E5E5", background: "#F5F5F5" }}>
+              <div style={{ position: "absolute", left: "10.9%", top: "13.71%", width: "78.06%", aspectRatio: "548 / 526", overflow: "hidden", borderRadius: 13 }}>
+                <img
+                  src="/images/home/torch-proxies-card.gif"
+                  alt="Torch Proxies dashboard showing a sub-user's data usage before generating a proxy"
+                  style={{ position: "absolute", left: "-14.07%", top: "-27%", width: "128.15%", height: "127%", maxWidth: "none" }}
+                />
+              </div>
+              <div className="card-overlay" />
             </div>
 
-            <div className="case-study-mockup" style={{ width: 288, flexShrink: 0, marginRight: -22 }}>
-              <img src="/dashboard-graphic.svg" width={288} height={233} alt="Dashboard mockup" style={{ display: "block" }} />
+            {/* Title + description */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <p className="card-title" style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: 14, color: "#15161C", lineHeight: "23px", letterSpacing: "-0.02em" }}>
+                Turning hidden constraints into clear decisions
+              </p>
+              <p className="card-desc" style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, fontSize: 12, color: "#959799", lineHeight: "20px", letterSpacing: "-0.02em" }}>
+                Making critical information visible at the moment users need it, so they can act with confidence.
+              </p>
             </div>
           </div>
-        </section>
+        </Link>
 
         {/* ── EMPTY DIVIDER ────────────────────────────────── */}
         <div style={{ width: 700, height: 64, borderBottom: "1px dashed #E4E5E5" }} />

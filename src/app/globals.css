@@ -135,6 +135,46 @@ a.link-blue:hover {
   border-right: 1px dashed #E4E5E5;
 }
 
+/* ── PROJECT CARD HOVER (duotone) ── */
+.card-media {
+  isolation: isolate;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: #1C8AF8;
+  mix-blend-mode: color;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.work-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.work-card .card-media img {
+  transition: transform 0.4s ease;
+}
+
+.work-card:hover .card-media img {
+  transform: scale(1.03);
+}
+
+.work-card .card-title,
+.work-card .card-desc {
+  transition: color 0.3s ease;
+}
+
+.work-card:hover .card-title {
+  color: #1C8AF8 !important;
+}
+
+.work-card:hover .card-desc {
+  color: #7EB3F5 !important;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 860px) {
   .sidebar-desktop {
@@ -220,7 +260,8 @@ a.link-blue:hover {
 
   /* All sections full width */
   .page-main section,
-  .page-main > div {
+  .page-main > div,
+  .page-main > a {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -337,28 +378,6 @@ a.link-blue:hover {
 
   .toolkit-col-full {
     width: 100% !important;
-  }
-
-  /* Case study — stack on mobile */
-  .case-study-row {
-    flex-direction: column !important;
-  }
-
-  .case-study-bullets {
-    flex: none !important;
-    width: 100% !important;
-    margin-bottom: 24px !important;
-  }
-
-  .case-study-mockup {
-    width: 90% !important;
-    margin-right: 0 !important;
-    margin-left: auto !important;
-  }
-
-  .case-study-mockup img {
-    width: 100% !important;
-    height: auto !important;
   }
 
   /* CTA tree — show on mobile, scaled like hero tree */
@@ -509,5 +528,10 @@ a.link-blue:hover {
   .case-hero-title {
     font-size: 28px !important;
     line-height: 34px !important;
+  }
+
+  .tp-two-col {
+    flex-direction: column !important;
+    gap: 32px !important;
   }
 }

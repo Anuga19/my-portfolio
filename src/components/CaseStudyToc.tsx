@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 export type TocSection = {
   id: string;
@@ -17,6 +19,11 @@ export default function CaseStudyToc({
 }) {
   const [active, setActive] = useState(sections[0]?.id);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const elements = sections
@@ -40,7 +47,12 @@ export default function CaseStudyToc({
 
   const handleJump = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const smoother = ScrollSmoother.get();
+    if (smoother) {
+      smoother.scrollTo(`#${id}`, true, "top top");
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     setOpen(false);
   };
 
@@ -88,10 +100,9 @@ export default function CaseStudyToc({
     </>
   );
 
-  return (
+  const fixedUi = (
     <>
       <aside className="case-toc-desktop">{tocContent}</aside>
-      <div className="case-toc-spacer" />
 
       <button
         className="case-toc-hamburger"
@@ -109,6 +120,16 @@ export default function CaseStudyToc({
           </div>
         </div>
       )}
+    </>
+  );
+
+  return (
+    <>
+      {/* Fixed-position UI is portaled to document.body so it isn't
+          trapped inside GSAP ScrollSmoother's transformed content,
+          which would otherwise break its position: fixed behavior. */}
+      {mounted ? createPortal(fixedUi, document.body) : fixedUi}
+      <div className="case-toc-spacer" />
     </>
   );
 }
