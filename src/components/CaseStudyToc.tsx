@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 export type TocSection = {
@@ -17,9 +17,25 @@ export default function CaseStudyToc({
   sections: TocSection[];
   backHref?: string;
 }) {
+  const router = useRouter();
   const [active, setActive] = useState(sections[0]?.id);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [hasHistory, setHasHistory] = useState(false);
+
+  useEffect(() => {
+    setHasHistory(window.history.length > 1);
+  }, []);
+
+  const handleBack = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpen(false);
+    if (hasHistory) {
+      router.back();
+    } else {
+      router.push(backHref);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -58,9 +74,9 @@ export default function CaseStudyToc({
 
   const tocContent = (
     <>
-      <Link
+      <a
         href={backHref}
-        onClick={() => setOpen(false)}
+        onClick={handleBack}
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -71,11 +87,12 @@ export default function CaseStudyToc({
           fontSize: 12,
           color: "#89909A",
           letterSpacing: "-0.24px",
+          cursor: "pointer",
         }}
       >
         <img src="/images/jink-host/dot-vector.svg" alt="" width={7} height={7} />
         Go back
-      </Link>
+      </a>
 
       <nav style={{ display: "flex", flexDirection: "column", marginTop: 47 }}>
         {sections.map((s) => (

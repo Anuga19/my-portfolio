@@ -16,8 +16,18 @@ const projects = [
     href: "/projects/jink-host",
   },
   {
+    name: "torch proxies",
+    title: "Turning hidden constraints into clear decisions",
+    desc: "Making critical information visible at the moment users need it, so they can act with confidence.",
+    image: "/images/torch-proxies/hero-card.png",
+    bg: "linear-gradient(to bottom, #FF5A1F 10%, #ffffff 123%)",
+    textColor: "rgba(255,90,31,0.3)",
+    textColorTo: "rgba(255,255,255,0.3)",
+    href: "/projects/torch-proxies",
+  },
+  {
     name: "shield proxies",
-    title: "Improving scannability in a proxy dashboard",
+    title: "Bringing order to a busy dashboard",
     desc: "Surfaced product variety and simplified data usage display, helping customers compare options and find what they need faster.",
     image: "/shield.png",
     bg: "linear-gradient(to bottom, #ffffff 16%, rgb(160,1,53) 152%)",
@@ -140,24 +150,49 @@ export default function Projects() {
                       <a href={p.tweetUrl}></a>
                     </blockquote>
                   </div>
+                ) : p.name === "torch proxies" ? (
+                  <div
+                    className="card-media"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "702 / 412",
+                      position: "relative",
+                      overflow: "hidden",
+                      borderRadius: 6,
+                      border: "0.5px solid #E4E5E5",
+                      backgroundImage: "url(/images/home/torch-proxies-card-bg.png)",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    <div style={{ position: "absolute", left: "10.9%", top: "13.71%", width: "78.06%", aspectRatio: "548 / 526", overflow: "hidden", borderRadius: 13 }}>
+                      <img
+                        src="/images/home/torch-proxies-card.gif"
+                        alt="Torch Proxies dashboard showing a sub-user's data usage before generating a proxy"
+                        style={{ position: "absolute", left: "-14.07%", top: "-27%", width: "128.15%", height: "127%", maxWidth: "none" }}
+                      />
+                    </div>
+                    <div className="card-overlay" />
+                  </div>
                 ) : (
-                  <div style={{ width: "100%", height: 374, borderRadius: 6, border: "0.5px solid #E4E5E5", overflow: "hidden", position: "relative", background: p.bg }}>
+                  <div className="card-media" style={{ width: "100%", height: 374, borderRadius: 6, border: "0.5px solid #E4E5E5", overflow: "hidden", position: "relative", background: p.bg }}>
                     <div style={{ position: "absolute", top: 78, left: 0, transform: "translateY(-50%)", fontFamily: "Inter, sans-serif", fontWeight: 900, fontSize: 130, textTransform: "uppercase", whiteSpace: "nowrap", color: "transparent", backgroundImage: `linear-gradient(to bottom, ${p.textColor}, ${p.textColorTo})`, WebkitBackgroundClip: "text", backgroundClip: "text", lineHeight: 1, userSelect: "none", letterSpacing: "-5px", paddingLeft: 4 }}>
                       {p.name}
                     </div>
                     <img src={p.image} alt={p.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                    <div className="card-overlay" />
                   </div>
                 )}
                 {/* Card text */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 20, fontWeight: 500, color: "#15161C", lineHeight: "30px", letterSpacing: "-0.55px" }}>{p.title}</p>
-                  <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#979899", lineHeight: "24px" }}>{p.desc}</p>
+                  <p className="card-title" style={{ fontFamily: "Inter, sans-serif", fontSize: 20, fontWeight: 500, color: "#15161C", lineHeight: "30px", letterSpacing: "-0.55px" }}>{p.title}</p>
+                  <p className="card-desc" style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#979899", lineHeight: "24px" }}>{p.desc}</p>
                 </div>
               </>
             );
             const sharedStyle: React.CSSProperties = { padding: "32px 24px", borderBottom: "1px dashed #E4E5E5", display: "flex", flexDirection: "column", gap: 23 };
             return href ? (
-              <Link key={p.name} href={href} style={{ ...sharedStyle, cursor: "pointer", textDecoration: "none", color: "inherit" }}>{cardContent}</Link>
+              <Link key={p.name} href={href} className="work-card" style={{ ...sharedStyle, cursor: "pointer", textDecoration: "none", color: "inherit" }}>{cardContent}</Link>
             ) : (
               <div key={p.name} style={{ ...sharedStyle, cursor: activeTab === "work" ? "default" : "default" }}>{cardContent}</div>
             );

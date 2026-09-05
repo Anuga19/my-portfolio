@@ -322,7 +322,20 @@ export default function Home() {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {/* Screenshot card */}
-            <div className="card-media" style={{ width: "100%", aspectRatio: "702 / 412", position: "relative", overflow: "hidden", borderRadius: 6, border: "0.5px solid #E4E5E5", background: "#F5F5F5" }}>
+            <div
+              className="card-media"
+              style={{
+                width: "100%",
+                aspectRatio: "702 / 412",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: 6,
+                border: "0.5px solid #E4E5E5",
+                backgroundImage: "url(/images/home/torch-proxies-card-bg.png)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
               <div style={{ position: "absolute", left: "10.9%", top: "13.71%", width: "78.06%", aspectRatio: "548 / 526", overflow: "hidden", borderRadius: 13 }}>
                 <img
                   src="/images/home/torch-proxies-card.gif"
