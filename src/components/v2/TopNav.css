@@ -1,0 +1,72 @@
+.v2-nav {
+  position: relative;
+  display: inline-flex;
+  gap: 0px;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 5px;
+  z-index: 30;
+}
+
+/* The active-tab indicator: a single shared pill that slides/resizes to
+   the active link instead of each link toggling its own background, so
+   switching tabs reads as one continuous piece of "liquid" moving between
+   them. Width and transform animate on slightly different curves/timing
+   (width lags and overshoots a touch) so the pill stretches toward the
+   new tab before catching up and settling, rather than just gliding as a
+   rigid block. */
+.v2-nav-pill {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  border-radius: 12px;
+  background: #f5f5f5;
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s,
+    opacity 0.15s ease;
+}
+
+/* The one-frame handoff jump (see TopNav.tsx) must be instantaneous, or
+   the pill would visibly animate from wherever it was on the previous
+   page's own layout to the handoff point — it should just appear there. */
+.v2-nav-pill.instant {
+  transition: none;
+}
+
+.v2-nav-link {
+  position: relative;
+  z-index: 1;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 17px;
+  font-weight: 400;
+  color: #697282;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.v2-nav-link:hover {
+  color: #15161c !important;
+}
+
+.v2-nav-link.active {
+  color: #15161c;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .v2-nav {
+    padding: 3px;
+  }
+
+  .v2-nav-link {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,98 @@
+/* v2 redesign of the Projects index page — nav, then a simple 2-column
+   grid of case-study cards, matching the new case-study design system's
+   rhythm rather than the old page's sidebar layout. */
+
+.v2-projects-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  box-sizing: border-box;
+  padding: 202px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* TopNav is portaled straight into <body> (outside ScrollSmoother's
+   #smooth-content, so its transform can't drag a fixed nav around — see
+   the Octo Proxies case study), so this can't be scoped under
+   `.v2-projects-page` like About's inline (non-portaled) nav is — by the
+   time this renders, the portal wrapper is a sibling of
+   `.v2-projects-page`, not a descendant. */
+.v2-projects-nav-portal .v2-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.v2-projects-container {
+  width: 100%;
+  max-width: 1240px;
+}
+
+.v2-projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 78px;
+}
+
+.v2-project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  text-decoration: none;
+}
+
+.v2-project-card-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 610 / 495;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.v2-project-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v2-project-card-title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.v2-project-card-subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .v2-projects-grid {
+    grid-template-columns: 1fr;
+    row-gap: 56px;
+  }
+}
+
+@media (max-width: 640px) {
+  .v2-projects-page {
+    padding-top: 150px;
+  }
+
+  .v2-project-card-title {
+    font-size: 20px;
+  }
+}

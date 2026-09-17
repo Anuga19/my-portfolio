@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ClickSound from "@/components/ClickSound";
 import SmoothScroll from "@/components/SmoothScroll";
+import MobileNotice from "@/components/MobileNotice";
 import { Analytics } from "@vercel/analytics/next";
 
 const mondwest = localFont({
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   title: "Anuga - UI/UX Designer",
   description: "Portfolio of Anuga Karunatilaka, UI/UX Designer crafting intentional digital experiences.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/new-favicon-3.svg",
   },
 };
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={datatype.variable}>
         <ClickSound />
         <SmoothScroll>{children}</SmoothScroll>
+        <MobileNotice />
         <Analytics />
       </body>
     </html>

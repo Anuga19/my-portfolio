@@ -19,6 +19,10 @@ export default function Sidebar() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Bootstrapping from a browser-only signal that isn't available during
+    // SSR — see the same pattern used across the v2 pages' portal mount
+    // gates for the full rationale.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -83,7 +87,7 @@ export default function Sidebar() {
 
       {/* Resume */}
       <a
-        href="https://drive.google.com/file/d/1vbS7k1pnSxRoxe4Bl0z6NccOYU_L-51f/view"
+        href="https://drive.google.com/file/d/1J4_3eJBHH76B3UYAkqFM_wXDfZRSeL1V/view"
         target="_blank"
         rel="noopener noreferrer"
         style={{ fontFamily: "Inter, sans-serif", fontSize: 13.2, fontWeight: 500, color: "#1C8AF8", textDecoration: "none", display: "flex", alignItems: "center", gap: 4, height: 24.8, marginTop: 32 }}

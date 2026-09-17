@@ -1,0 +1,501 @@
+/* Re-skin of the Torch Proxies "Generate Proxies" case study to match the
+   new case-study design system (same pattern as Octo Proxies / Eyonic):
+   fixed breadcrumb nav, single left-aligned 1020px column, the same
+   heading/paragraph type scale. Only the text and image assets carry over
+   from the old page — the layout/spacing follows the new system's own
+   rhythm rather than the old page's pixel values. */
+
+.tp2-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  box-sizing: border-box;
+  padding: 202px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tp2-container {
+  width: 100%;
+  max-width: 1020px;
+}
+
+/* ── BREADCRUMB NAV ── */
+.tp2-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 4px;
+}
+
+.tp2-nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  text-decoration: none;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 16.8px;
+}
+
+.tp2-nav-home img {
+  display: block;
+  width: 15.2px;
+  height: 16px;
+}
+
+.tp2-nav-current {
+  padding: 10px 16px;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  letter-spacing: -0.528px;
+  line-height: 16.8px;
+}
+
+/* ── TYPE SCALE (shared across every section) ── */
+.tp2-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.tp2-subheading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: #15161c;
+}
+
+.tp2-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.tp2-paragraphs p,
+.tp2-subheading + p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.tp2-paragraphs strong {
+  font-weight: 500;
+}
+
+/* ── TITLE BLOCK (icon, then a title+team two-column row, matching the
+   Octo Proxies / Eyonic pattern) — before the hero image, not after. ── */
+.tp2-title-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 37px;
+}
+
+.tp2-title-row {
+  display: flex;
+  gap: 190px;
+  align-items: flex-start;
+}
+
+.tp2-title-main {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 625px;
+}
+
+.tp2-title-main .tp2-paragraphs {
+  margin-top: 24px;
+}
+
+.tp2-title-meta {
+  flex: 0 0 205px;
+}
+
+.tp2-title-meta .tp2-heading {
+  margin-bottom: 24px;
+}
+
+.tp2-role-list p,
+.tp2-title-meta .date {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.tp2-title-meta .date {
+  margin-top: 29px;
+}
+
+/* ── HERO ── */
+.tp2-img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.tp2-img-hero {
+  margin-top: 84px;
+}
+
+.tp2-img-plain {
+  display: block;
+  width: 100%;
+}
+
+/* ── SECTION SPACING ── */
+.tp2-section {
+  margin-top: 110px;
+}
+
+.tp2-section .tp2-img,
+.tp2-section .tp2-img-plain {
+  margin-top: 32px;
+}
+
+.tp2-section .tp2-img + .tp2-paragraphs,
+.tp2-section .tp2-img-plain + .tp2-paragraphs,
+.tp2-section .tp2-callout + .tp2-paragraphs,
+.tp2-section .tp2-table + .tp2-paragraphs,
+.tp2-section .tp2-two-col + .tp2-paragraphs,
+.tp2-section .tp2-note-grid + .tp2-paragraphs {
+  margin-top: 32px;
+}
+
+.tp2-section .tp2-callout,
+.tp2-section .tp2-table,
+.tp2-section .tp2-two-col,
+.tp2-section .tp2-note-grid,
+.tp2-section .tp2-compare {
+  margin-top: 32px;
+}
+
+/* ── CALLOUT BOX ── */
+.tp2-callout {
+  background: #f8f8f8;
+  border-radius: 16px;
+  padding: 24px 32px;
+}
+
+.tp2-callout p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+}
+
+.tp2-callout .lead {
+  color: #15161c;
+  font-weight: 500;
+}
+
+.tp2-callout .rest {
+  color: #8c8c8c;
+}
+
+/* ── STAGE TABLE ── */
+.tp2-table {
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.tp2-table-row {
+  display: grid;
+  grid-template-columns: 132fr 248fr 234fr;
+}
+
+.tp2-table-row.head {
+  background: #f8f8f8;
+  border-bottom: 1px solid #efefef;
+}
+
+.tp2-table-row + .tp2-table-row {
+  border-top: 1px solid #efefef;
+}
+
+.tp2-table-row p {
+  margin: 0;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  letter-spacing: -0.32px;
+  line-height: 24px;
+}
+
+.tp2-table-row.head p {
+  font-weight: 500;
+  color: #15161c;
+}
+
+.tp2-table-row:not(.head) p {
+  font-weight: 400;
+  color: #8c8c8c;
+}
+
+.tp2-table-row p + p {
+  border-left: 1px solid #efefef;
+}
+
+/* ── TWO-COLUMN NUMBERED LIST ── */
+.tp2-two-col {
+  display: flex;
+  gap: 64px;
+}
+
+.tp2-two-col > div {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tp2-two-col p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+/* ── BULLET LIST ── */
+.tp2-list {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tp2-list li {
+  position: relative;
+  padding-left: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.tp2-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #15161c;
+}
+
+/* ── NOTE GRID (small annotation pairs pulled out of the old diagrams) ── */
+.tp2-note-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+}
+
+.tp2-note-grid .note-heading {
+  margin: 0 0 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #15161c;
+}
+
+.tp2-note-grid .note-body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: #8c8c8c;
+}
+
+/* ── BEFORE/AFTER COMPARISON ── */
+.tp2-compare {
+  display: flex;
+  gap: 20px;
+}
+
+.tp2-compare > div {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.tp2-compare img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+.tp2-compare .note-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #15161c;
+}
+
+.tp2-compare .note-body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: #8c8c8c;
+}
+
+/* ── DIVIDER + NEXT PROJECT ── */
+.tp2-divider {
+  margin-top: 172px;
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+.tp2-next-project-heading {
+  margin-top: 43px;
+}
+
+.tp2-next-card {
+  margin-top: 24px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1020 / 520;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.tp2-next-card-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 45%);
+}
+
+.tp2-next-card-caption {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tp2-next-card-caption .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.tp2-next-card-caption .subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.32px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .tp2-title-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .tp2-title-main {
+    max-width: none;
+  }
+
+  .tp2-title-meta {
+    flex: none;
+  }
+
+  .tp2-two-col,
+  .tp2-compare {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .tp2-note-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tp2-table-row {
+    grid-template-columns: 1fr;
+  }
+
+  .tp2-table-row p + p {
+    border-left: none;
+    border-top: 1px solid #efefef;
+  }
+}
+
+@media (max-width: 640px) {
+  .tp2-page {
+    padding-top: 150px;
+  }
+
+  .tp2-heading {
+    font-size: 20px;
+  }
+
+  .tp2-next-card-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+}

@@ -1,0 +1,70 @@
+/* Small dismissible toast telling mobile visitors the site isn't tuned
+   for their screen yet. Fixed to the bottom edge (rather than the top,
+   where every page's own nav pill lives) so it can't sit on top of any
+   persistent navigation, and it's compact enough to stay clear of the
+   page's own bottom-of-screen elements (case-study "Next Project" cards,
+   the /new stack footer, etc.) rather than covering them. */
+.v2-mobile-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* `left: 50%` + no explicit width makes a fixed element's shrink-to-fit
+     sizing use only the space from its left edge to the containing
+     block's right edge (half the viewport here) as "available width",
+     before translateX(-50%) re-centers it visually — so without a real
+     width it silently gets squeezed to ~50vw and wraps the text onto
+     three lines instead of one. `max-content` sizes it to its actual
+     content first, and `max-width` still caps that on narrow screens. */
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 10px 10px 10px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.v2-mobile-notice p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  line-height: 17px;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  color: #191919;
+}
+
+.v2-mobile-notice-close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  color: #191919;
+}
+
+.v2-mobile-notice-close:hover {
+  background: rgba(25, 25, 25, 0.08);
+}
+
+/* Only ever mounted on small screens — MobileNotice.tsx gates rendering on
+   a matchMedia check — but guard the CSS too in case that check changes. */
+@media (min-width: 641px) {
+  .v2-mobile-notice {
+    display: none;
+  }
+}

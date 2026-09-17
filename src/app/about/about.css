@@ -1,0 +1,499 @@
+/* --nav-offset replicates the exact formula /new uses to center its
+   [nav, card stack, footer] group in a 100dvh viewport (nav height 49px +
+   its 32px margin-bottom + the stack's min(64vh,520px) viewport + the
+   stack's own peek-card padding-bottom formula + footer height 49px,
+   halved) — not a fixed value — so the navbar's initial position matches
+   the homepage's at any viewport height, without this page needing to
+   duplicate that centering layout itself (which wouldn't even make sense
+   here since this page scrolls and /new's doesn't). The 162px in the
+   middle is the constant terms folded together: 49 (nav) + 32 (nav
+   margin) + 32 (stack's own bottom-padding constant) + 49 (footer) = 162
+   (see the mobile override below, which also folds in the extra 40px
+   from /new's mobile-only `.v2-page { gap: 20px }`).
+
+   Unlike /new, this nav stays position:fixed while the page scrolls
+   (every v2 page except the homepage does — /new's own viewport doesn't
+   scroll at all, so a fixed nav there would be meaningless). Since a
+   fixed element is removed from flow, page padding-top now has to
+   account for nav's own height (49px) plus the gap that used to be its
+   margin-bottom (111px) too, not just the space above it. */
+.v2-about-page {
+  --nav-offset: calc((100dvh - 162px - min(64vh, 520px) - max(12vh - 0.1 * min(64vh, 520px), 0px)) / 2);
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(var(--nav-offset) + 49px + 111px);
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 120px;
+  box-sizing: border-box;
+}
+
+.v2-about-page .v2-nav {
+  position: fixed;
+  top: var(--nav-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.v2-about-content {
+  width: 100%;
+  max-width: 1440px;
+}
+
+/* ── HERO ROW ── */
+/* justify-content: center — the photo+text pair's natural width (~974px)
+   is narrower than the content box, so without this the pair sits flush
+   left inside the (already-centered) box instead of centering as a unit. */
+.v2-about-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  margin-bottom: 132px;
+}
+
+.v2-about-hero-photo {
+  position: relative;
+  flex: 1 1 420px;
+  max-width: 449px;
+  aspect-ratio: 449.07 / 455.65;
+}
+
+.v2-about-hero-text {
+  flex: 1 1 380px;
+  max-width: 461px;
+}
+
+.v2-about-heading {
+  margin: 0 0 19px;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.v2-about-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.v2-about-paragraphs p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+}
+
+/* ── PHOTO COLLAGE (rotated Polaroid-style cards) ── */
+/* Position/size are % of the collage box (matching each element's exact
+   Figma bounding-box proportions), so the composition holds at any width
+   instead of relying on fixed px against a 1440px reference frame. */
+.v2-photo-card {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 16px;
+  top: 50%;
+  left: 50%;
+}
+
+.v2-photo-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v2-about-hero-photo .v2-photo-card {
+  width: 86.93%;
+  height: 87.41%;
+  transform: translate(-50%, -50%) rotate(-9.21deg);
+  background: #100c57;
+}
+
+/* ── EXPERIENCE ROW ── */
+.v2-about-experience {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 64px;
+  margin-bottom: 132px;
+}
+
+.v2-about-experience-main {
+  flex: 1 1 380px;
+  max-width: 505px;
+}
+
+.v2-about-experience-photos {
+  position: relative;
+  flex: 1 1 380px;
+  max-width: 420px;
+  aspect-ratio: 511.62 / 617.47;
+  align-self: center;
+}
+
+.v2-about-experience-photo-1 {
+  position: absolute;
+  left: 14.37%;
+  top: 0%;
+  width: 85.63%;
+  height: 51.19%;
+}
+
+.v2-about-experience-photo-1 .v2-photo-card {
+  width: 91.92%;
+  height: 80.84%;
+  transform: translate(-50%, -50%) rotate(9.11deg);
+  background: #100c57;
+}
+
+.v2-about-experience-photo-2 {
+  position: absolute;
+  left: 0%;
+  top: 29.9%;
+  width: 83.45%;
+  height: 47.9%;
+}
+
+.v2-about-experience-photo-2 .v2-photo-card {
+  width: 94.32%;
+  height: 86.4%;
+  transform: translate(-50%, -50%) rotate(-5.93deg);
+  background: #2a23a8;
+}
+
+.v2-about-experience-photo-3 {
+  position: absolute;
+  left: 24.2%;
+  top: 55.51%;
+  width: 64.22%;
+  height: 44.5%;
+}
+
+.v2-about-experience-photo-3 .v2-photo-card {
+  width: 87.03%;
+  height: 77.28%;
+  transform: translate(-50%, -50%) rotate(13.89deg);
+  background: #100c57;
+}
+
+.v2-about-experience-heading {
+  margin: 0 0 32px;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.v2-about-experience-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #efefef;
+}
+
+.v2-about-experience-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #efefef;
+}
+
+.v2-about-experience-icon {
+  flex-shrink: 0;
+  width: 85px;
+  height: 85px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.v2-about-experience-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v2-about-experience-icon.plain {
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.v2-about-experience-icon.plain img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.v2-about-experience-info {
+  display: flex;
+  flex: 1 1 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.v2-about-experience-role {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v2-about-experience-role .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: #15161c;
+}
+
+.v2-about-experience-role .company {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+}
+
+.v2-about-experience-date {
+  margin: 0;
+  flex-shrink: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.24px;
+  color: #8c8c8c;
+  white-space: nowrap;
+}
+
+/* ── OUTSIDE WORK ROW (mirrors the hero row: photo left, text right) ── */
+.v2-about-outside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+
+.v2-about-outside-photos {
+  position: relative;
+  flex: 1 1 490px;
+  max-width: 525px;
+  aspect-ratio: 524.68 / 450.18;
+}
+
+.v2-about-outside-text {
+  flex: 1 1 380px;
+  max-width: 461px;
+}
+
+.v2-about-outside-photo-1 {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 75.68%;
+  height: 89.72%;
+}
+
+.v2-about-outside-photo-1 .v2-photo-card {
+  width: 92.55%;
+  height: 92.84%;
+  transform: translate(-50%, -50%) rotate(-4.71deg);
+  background: #100c57;
+}
+
+.v2-about-outside-photo-2 {
+  position: absolute;
+  left: 41.04%;
+  top: 42.53%;
+  width: 58.96%;
+  height: 57.46%;
+}
+
+.v2-about-outside-photo-2 .v2-photo-card {
+  width: 87.03%;
+  height: 77.28%;
+  transform: translate(-50%, -50%) rotate(13.89deg);
+  background: #1c8af8;
+}
+
+/* ── CONTACT CTA BANNER ── */
+.v2-about-cta {
+  width: 100%;
+  max-width: 1020px;
+  margin: 44px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 121px;
+  padding: 0 32px;
+  box-sizing: border-box;
+  background: #f8f8f8;
+  border-radius: 16px;
+}
+
+.v2-about-cta-left {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+  min-width: 0;
+  padding: 24px 0;
+}
+
+.v2-about-cta-sticker {
+  display: block;
+  width: 76px;
+  height: 67.49px;
+  flex-shrink: 0;
+}
+
+.v2-about-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.v2-about-cta-text .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.v2-about-cta-text .subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: #8c8c8c;
+}
+
+.v2-about-cta-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #191919;
+  color: #f8f8f8;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  font-weight: 500;
+  line-height: 16.8px;
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .v2-about-hero,
+  .v2-about-experience,
+  .v2-about-outside {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .v2-about-hero-photo,
+  .v2-about-experience-photos,
+  .v2-about-outside-photos {
+    max-width: 380px;
+    width: 100%;
+  }
+
+  .v2-about-experience-main,
+  .v2-about-outside-text {
+    max-width: none;
+    width: 100%;
+  }
+
+  .v2-about-hero {
+    margin-bottom: 64px;
+  }
+
+  .v2-about-experience {
+    margin-bottom: 64px;
+  }
+
+  .v2-about-cta {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .v2-about-cta-left {
+    padding: 0;
+  }
+
+  .v2-about-cta-button {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Same replication as the base rule above, but with /new's mobile
+     constants: nav shrinks to 41px tall at this breakpoint, and /new's
+     own mobile override adds `gap: 20px` between its 3 centered flex
+     items (nav/stack/footer) — 2 gaps = 40px extra. Folded constant:
+     41 (nav) + 32 (nav margin) + 32 (stack's own bottom-padding
+     constant) + 49 (footer) + 40 (the two 20px gaps) = 194. Page
+     padding-top then adds nav's own mobile height (41px) and its mobile
+     gap (64px), same reasoning as the base rule above. */
+  .v2-about-page {
+    --nav-offset: calc((100dvh - 194px - min(64vh, 520px) - max(12vh - 0.1 * min(64vh, 520px), 0px)) / 2);
+    padding-top: calc(var(--nav-offset) + 41px + 64px);
+  }
+
+  .v2-about-heading,
+  .v2-about-experience-heading {
+    font-size: 20px;
+  }
+
+  .v2-about-experience-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .v2-about-experience-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .v2-about-experience-date {
+    order: 2;
+  }
+
+  .v2-about-cta-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

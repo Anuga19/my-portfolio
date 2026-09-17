@@ -1,114 +1,135 @@
 "use client";
 
-import Sidebar from "@/components/Sidebar";
-import HoverExpand from "@/components/HoverExpand";
+import TopNav from "@/components/v2/TopNav";
+import "./about.css";
+
+const experience: { title: string; company: string; date: string; icon: string; plainIcon?: boolean }[] = [
+  {
+    title: "UI UX Designer",
+    company: "Torchproxies",
+    date: "February 2025 - July 2026",
+    icon: "/images/new/about/torch-icon.svg",
+  },
+  {
+    title: "UI UX Designer Intern",
+    company: "Torchproxies & Shield Proxies",
+    date: "February 2024 - July 2025",
+    icon: "/images/new/about/torch-icon.svg",
+  },
+  {
+    title: "UI UX Designer Intern",
+    company: "Prifina",
+    date: "Jan 2024 - March 2024",
+    icon: "/images/new/about/prifina-logo.png",
+    plainIcon: true,
+  },
+];
 
 export default function About() {
   return (
-    <div className="page-wrapper">
-      <div className="page-inner">
-        <Sidebar />
-
-        <main className="page-main about-main" style={{ padding: "67px 24px 0 24px" }}>
-
-          <h1
-            className="font-display"
-            style={{
-              fontSize: 32,
-              color: "#15161C",
-              letterSpacing: "-0.01em",
-              marginBottom: 20,
-            }}
-          >
-            Hey! It&apos;s Anuga
-          </h1>
-
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#2E3138", lineHeight: "23px", letterSpacing: "-0.02em", marginBottom: 28 }}>
-            I&apos;m a self-taught UI/UX Designer and a recent graduate in Software Engineering from Staffordshire University.
-          </p>
-
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "#15161C", lineHeight: "23px", letterSpacing: "-0.02em", marginBottom: 16 }}>
-            What I&apos;ve been up to
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#2E3138", lineHeight: "23px", letterSpacing: "-0.02em" }}>
-              For close to 3 years I&apos;ve been the sole designer at Torch Proxies, working across three live brands at once: Torch Proxies, Shield Proxies, and Gryffin Studios. I&apos;ve designed everything from enterprise dashboards to client websites, using real behavioural data to make sure my decisions actually hold up once they ship. Before that I interned at Prifina, a privacy focused data startup in San Francisco.
-            </p>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#2E3138", lineHeight: "23px", letterSpacing: "-0.02em" }}>
-              Outside of work, I drink way too much coffee, take care of my cat, take photos, and build random side projects that mix design and development.
-            </p>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#2E3138", lineHeight: "23px", letterSpacing: "-0.02em" }}>
-              I wouldn&apos;t be here without the people who pushed me along the way: friends, family and the founders/CEOs who trusted me with real work when I was just starting out.
-            </p>
-          </div>
-
-          {/* Experience */}
-          <div style={{ marginTop: 32, marginLeft: -24, marginRight: -24, padding: "42px 24px", borderTop: "1px dashed #E4E5E5", borderBottom: "1px dashed #E4E5E5" }}>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 600, color: "#15161C", letterSpacing: "-0.02em", marginBottom: 32 }}>Experience</p>
-            {[
-              { dates: "April 2025 - Present", role: "Associate UI/UX Designer at Torch Labs" },
-              { dates: "April 2024 - April 2025", role: "UI/UX Design Intern at Torch Labs" },
-              { dates: "Jan 2024 - May 2024", role: "UI/UX Design Intern at Prifina" },
-            ].map((exp, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 0, paddingTop: i === 0 ? 0 : 32 }}>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#697282", lineHeight: "23px", width: 190, flexShrink: 0 }}>{exp.dates}</p>
-                <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 500, color: "#15161C", lineHeight: "23px" }}>{exp.role}</p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginLeft: -24, marginRight: -24, padding: "64px 24px" }}>
-            <HoverExpand images={[
-              { src: "/images/img1.png", alt: "Photo 1" },
-              { src: "/images/img2.png", alt: "Photo 2" },
-              { src: "/images/img3.png", alt: "Photo 3" },
-              { src: "/images/img4.png", alt: "Photo 4" },
-              { src: "/images/img5.png", alt: "Photo 5" },
-              { src: "/images/img6.png", alt: "Photo 6" },
-              { src: "/images/img7.png", alt: "Photo 7" },
-              { src: "/images/img8.png", alt: "Photo 8" },
-              { src: "/images/img9.png", alt: "Photo 9" },
-            ]} />
-          </div>
-
-          {/* Footer section */}
-          <div
-            style={{
-              marginLeft: -24,
-              marginRight: -24,
-              marginTop: 0,
-              padding: "24px 24px 42px 24px",
-              borderTop: "1px dashed #E4E5E5",
-              display: "flex",
-              alignItems: "flex-start",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <h2
-                className="font-display"
-                style={{ fontSize: 32, color: "#15161C", letterSpacing: "0.02em" }}
-              >
-                That&apos;s Me 👋
-              </h2>
-              <a
-                href="/"
-                className="link-blue"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "#1C8AF8",
-                  textDecoration: "none",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Go to home page
-              </a>
+    <div className="v2-about-page">
+      <TopNav />
+      <div className="v2-about-content">
+        <div className="v2-about-hero">
+          <div className="v2-about-hero-photo">
+            <div className="v2-photo-card">
+              <img src="/images/new/about/photo-hero.jpg" alt="Anuga relaxing outdoors" />
             </div>
           </div>
+          <div className="v2-about-hero-text">
+            <h1 className="v2-about-heading">Hey! It&apos;s Anuga</h1>
+            <div className="v2-about-paragraphs">
+              <p>
+                I&apos;ve always been curious about what makes people connect with certain things. Why do we return
+                to the same shows, choose certain products or instantly feel comfortable using some apps over
+                others? What makes a design memorable or a brand hard to ignore?
+              </p>
+              <p>
+                I enjoy digging into the reasoning behind those choices. To me, every product, interface, and brand
+                has something to say through the way it looks, feels and works, whether intentional or not.
+              </p>
+            </div>
+          </div>
+        </div>
 
-        </main>
+        <div className="v2-about-experience">
+          <div className="v2-about-experience-main">
+            <h2 className="v2-about-experience-heading">Experience</h2>
+            <div className="v2-about-experience-list">
+              {experience.map((item) => (
+                <div key={item.title + item.date} className="v2-about-experience-row">
+                  <div className={`v2-about-experience-icon${item.plainIcon ? " plain" : ""}`}>
+                    <img src={item.icon} alt="" />
+                  </div>
+                  <div className="v2-about-experience-info">
+                    <div className="v2-about-experience-role">
+                      <p className="title">{item.title}</p>
+                      <p className="company">{item.company}</p>
+                    </div>
+                    <p className="v2-about-experience-date">{item.date}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="v2-about-experience-photos">
+            <div className="v2-about-experience-photo-1">
+              <div className="v2-photo-card">
+                <img src="/images/new/about/photo-group-warm.jpg" alt="Team photo" />
+              </div>
+            </div>
+            <div className="v2-about-experience-photo-2">
+              <div className="v2-photo-card">
+                <img src="/images/new/about/photo-group-blue.jpg" alt="Team photo" />
+              </div>
+            </div>
+            <div className="v2-about-experience-photo-3">
+              <div className="v2-photo-card">
+                <img src="/images/new/about/photo-kiosk.jpg" alt="Presenting at a booth" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="v2-about-outside">
+          <div className="v2-about-outside-photos">
+            <div className="v2-about-outside-photo-1">
+              <div className="v2-photo-card">
+                <img src="/images/new/about/photo-outside-palms.jpg" alt="Palm trees along the coast" />
+              </div>
+            </div>
+            <div className="v2-about-outside-photo-2">
+              <div className="v2-photo-card">
+                <img src="/images/new/about/photo-outside-cat.jpg" alt="My cat relaxing outdoors" />
+              </div>
+            </div>
+          </div>
+          <div className="v2-about-outside-text">
+            <h2 className="v2-about-heading">Outside Work</h2>
+            <div className="v2-about-paragraphs">
+              <p>
+                Outside of work, I drink way too much coffee, take care of my cat, take photos, and build random
+                side projects that mix design and development.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="v2-about-cta">
+          <div className="v2-about-cta-left">
+            <img src="/images/new/about/cta-face-sticker.svg" alt="" className="v2-about-cta-sticker" />
+            <div className="v2-about-cta-text">
+              <p className="title">Currently looking for a place to work, learn and grow.</p>
+              <p className="subtitle">
+                If you have an opportunity or want to collaborate, feel free to reach out at
+                anugakarunatilaka.22@gmail.com
+              </p>
+            </div>
+          </div>
+          <a href="mailto:anugakarunatilaka.22@gmail.com" className="v2-about-cta-button">
+            Say Hello!
+          </a>
+        </div>
       </div>
     </div>
   );

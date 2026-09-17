@@ -1,222 +1,85 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import TopNav from "@/components/v2/TopNav";
+import "./projects.css";
 
-const projects = [
+const projects: { name: string; title: string; subtitle: string; image: string; href: string }[] = [
   {
-    name: "jink host",
-    title: "Landing page redesign for a global VPS & RDP provider",
-    desc: "Designed a custom VPS builder and clearer region/tier comparisons to highlight features competitors didn't offer.",
-    image: "/jink.png",
-    bg: "linear-gradient(to bottom, #1C8AF8 10%, #ffffff 123%)",
-    textColor: "rgba(255,255,255,0.3)",
-    textColorTo: "rgba(28,138,248,0.3)",
-    href: "/projects/jink-host",
+    name: "eyonic",
+    title: "Designing an MES dashboard for factory floors",
+    subtitle: "Turning camera footage into real-time production data",
+    image: "/images/new/projects/card-eyonic.jpg",
+    href: "/projects/eyonic",
   },
   {
     name: "torch proxies",
-    title: "Turning hidden constraints into clear decisions",
-    desc: "Making critical information visible at the moment users need it, so they can act with confidence.",
-    image: "/images/torch-proxies/hero-card.png",
-    bg: "linear-gradient(to bottom, #FF5A1F 10%, #ffffff 123%)",
-    textColor: "rgba(255,90,31,0.3)",
-    textColorTo: "rgba(255,255,255,0.3)",
+    title: "Designing a proxy generation flow",
+    subtitle: "Surfacing data balance before users hit Generate",
+    image: "/images/new/projects/card-torch-proxies.jpg",
     href: "/projects/torch-proxies",
+  },
+  {
+    name: "jink host",
+    title: "Designing a landing page for a hosting provider",
+    subtitle: "Turning a broad product catalogue into a clear path to purchase",
+    image: "/images/new/projects/card-jink-host.jpg",
+    href: "/projects/jink-host",
+  },
+  {
+    name: "octo proxies",
+    title: "Branding for a proxy company",
+    subtitle: "A flexible visual identity built around adaptability, reach and control",
+    image: "/images/new/projects/card-octo-proxies.jpg",
+    href: "/projects/octo-proxies",
   },
   {
     name: "shield proxies",
     title: "Bringing order to a busy dashboard",
-    desc: "Surfaced product variety and simplified data usage display, helping customers compare options and find what they need faster.",
-    image: "/shield.png",
-    bg: "linear-gradient(to bottom, #ffffff 16%, rgb(160,1,53) 152%)",
-    textColor: "rgba(255,255,255,1)",
-    textColorTo: "rgba(160,1,53,0.97)",
+    subtitle: "Simplifying comparison, hierarchy and purchase priority",
+    image: "/images/new/projects/card-shield-proxies.jpg",
     href: "/projects/shield-proxies",
-  },
-  {
-    name: "gryffin analytics",
-    title: "Landing page design for a new data analytics company",
-    desc: "Designed a landing page with a distinct visual direction to help a brand new company stand out from typical analytics competitors.",
-    image: "/gryffin-analytics.png",
-    bg: "linear-gradient(to bottom, #ff0000 14%, #ffffff 103%)",
-    textColor: "rgba(255,0,0,0.3)",
-    textColorTo: "rgba(255,255,255,0.3)",
-  },
-  {
-    name: "tikiri toys",
-    title: "Improving information hierarchy in an E-commerce Product Page",
-    desc: "Reorganised scattered content into a clear hierarchy, surfacing decision-critical info first to drive more conversions.",
-    image: "/tikiritoys.png",
-    bg: "linear-gradient(to bottom, #f1bcb9 14%, #ffffff 103%)",
-    textColor: "rgba(255,255,255,0.66)",
-    textColorTo: "rgba(241,188,185,0.66)",
-  },
-  {
-    name: "Rovex",
-    title: "Brand and product design for an event management platform",
-    desc: "Designed the brand identity, landing page and dashboard for an event hub that brings planning, tracking and engagement into one place.",
-    image: "/rovex.png",
-    bg: "linear-gradient(to bottom, #4ffb85 14%, #ffffff 103%)",
-    textColor: "rgba(255,255,255,0.62)",
-    textColorTo: "rgba(255,255,255,0.62)",
-  },
-];
-
-const funProjects = [
-  {
-    name: "new portfolio",
-    title: "An envelope that catches your words",
-    desc: "A p5.js experiment where typed letters fall one by one into an envelope, which seals and drops into a pile, built just to play with physics and interactions.",
-    tweetUrl: "https://x.com/AnugaKarunatil1/status/2065481913562017910",
-  },
-  {
-    name: "side project",
-    title: "A clickable pixel map for FIFA 2026",
-    desc: "A pixel map of FIFA 2026 host cities. Click any city to explore the poster design, easter eggs, and match schedules.",
-    tweetUrl: "https://x.com/AnugaKarunatil1/status/2066655024353321190",
-  },
-  {
-    name: "side project 2",
-    title: "",
-    desc: "",
-    tweetUrl: "https://x.com/AnugaKarunatil1/status/2043948952106742099",
   },
 ];
 
 export default function Projects() {
-  const [activeTab, setActiveTab] = useState<"work" | "fun">("work");
-  const [isMobile, setIsMobile] = useState(false);
-  const visibleProjects = activeTab === "work" ? projects : funProjects;
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 860);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === "fun") {
-      if ((window as any).twttr?.widgets) {
-        (window as any).twttr.widgets.load();
-      } else {
-        const script = document.createElement("script");
-        script.src = "https://platform.twitter.com/widgets.js";
-        script.async = true;
-        document.body.appendChild(script);
-      }
-    }
-  }, [activeTab]);
+  // SSR-safe portal mount gate — see the Octo Proxies case study for the
+  // full explanation of why a `typeof document` branch would break
+  // hydration here instead.
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- standard SSR-safe portal mount gate (see comment above)
+  useEffect(() => setMounted(true), []);
 
   return (
-    <div className="page-wrapper">
-      <div className="page-inner">
-        <Sidebar />
+    <div className="v2-projects-page">
+      {/* Portaled into <body>, outside ScrollSmoother's #smooth-content —
+          see the Octo Proxies case study for why a fixed nav needs this.
+          Wrapped in its own class (rather than styling the shared bare
+          `.v2-nav` directly) so this page's fixed positioning can't
+          collide in specificity with /new's own `.v2-nav` override — both
+          are loaded as plain global stylesheets, not scoped modules. */}
+      {mounted && createPortal(
+        <div className="v2-projects-nav-portal">
+          <TopNav />
+        </div>,
+        document.body
+      )}
 
-        <main className="page-main projects-main">
-
-          {/* Header */}
-          <div className="projects-header" style={{ padding: "67px 24px 16px 24px", display: "flex", flexDirection: "column", gap: 15, borderBottom: "1px dashed #E4E5E5" }}>
-            <h1 className="font-display" style={{ fontSize: 32, color: "#15161C", letterSpacing: "0.02em" }}>
-              Projects
-            </h1>
-            <div style={{ display: "flex", gap: 8 }}>
-              <button
-                onClick={() => setActiveTab("work")}
-                style={{ background: activeTab === "work" ? "#15161C" : "#f3f3f3", padding: "8px 16px", border: "none", cursor: "pointer" }}
-              >
-                <span style={{ fontFamily: "var(--font-datatype), sans-serif", fontSize: 13, fontWeight: activeTab === "work" ? 500 : 400, color: activeTab === "work" ? "#fff" : "#000", textTransform: "uppercase", letterSpacing: "0.05em" }}>My Work</span>
-              </button>
-              <button
-                onClick={() => setActiveTab("fun")}
-                style={{ background: activeTab === "fun" ? "#15161C" : "#f3f3f3", padding: "8px 16px", border: "none", cursor: "pointer" }}
-              >
-                <span style={{ fontFamily: "var(--font-datatype), sans-serif", fontSize: 13, fontWeight: activeTab === "fun" ? 500 : 400, color: activeTab === "fun" ? "#fff" : "#000", textTransform: "uppercase", letterSpacing: "0.05em" }}>Fun Projects</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Project cards */}
-          {visibleProjects.map((p) => {
-            const href = "href" in p ? p.href : undefined;
-            const cardContent = (
-              <>
-                {/* Card image or tweet embed */}
-                {"tweetUrl" in p ? (
-                  <div className="tweet-container" style={isMobile ? { width: "100%" } : { width: "100%", borderRadius: 6, border: "0.5px solid #E4E5E5", overflow: "hidden", background: "#fff", display: "flex", justifyContent: "center", padding: "16px 0" }}>
-                    <blockquote className="twitter-tweet" data-theme="light" data-dnt="true" style={{ margin: 0 }}>
-                      <a href={p.tweetUrl}></a>
-                    </blockquote>
-                  </div>
-                ) : p.name === "torch proxies" ? (
-                  <div
-                    className="card-media"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "702 / 412",
-                      position: "relative",
-                      overflow: "hidden",
-                      borderRadius: 6,
-                      border: "0.5px solid #E4E5E5",
-                      backgroundImage: "url(/images/home/torch-proxies-card-bg.png)",
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    <div style={{ position: "absolute", left: "10.9%", top: "13.71%", width: "78.06%", aspectRatio: "548 / 526", overflow: "hidden", borderRadius: 13 }}>
-                      <img
-                        src="/images/home/torch-proxies-card.gif"
-                        alt="Torch Proxies dashboard showing a sub-user's data usage before generating a proxy"
-                        style={{ position: "absolute", left: "-14.07%", top: "-27%", width: "128.15%", height: "127%", maxWidth: "none" }}
-                      />
-                    </div>
-                    <div className="card-overlay" />
-                  </div>
-                ) : (
-                  <div className="card-media" style={{ width: "100%", height: 374, borderRadius: 6, border: "0.5px solid #E4E5E5", overflow: "hidden", position: "relative", background: p.bg }}>
-                    <div style={{ position: "absolute", top: 78, left: 0, transform: "translateY(-50%)", fontFamily: "Inter, sans-serif", fontWeight: 900, fontSize: 130, textTransform: "uppercase", whiteSpace: "nowrap", color: "transparent", backgroundImage: `linear-gradient(to bottom, ${p.textColor}, ${p.textColorTo})`, WebkitBackgroundClip: "text", backgroundClip: "text", lineHeight: 1, userSelect: "none", letterSpacing: "-5px", paddingLeft: 4 }}>
-                      {p.name}
-                    </div>
-                    <img src={p.image} alt={p.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-                    <div className="card-overlay" />
-                  </div>
-                )}
-                {/* Card text */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                  <p className="card-title" style={{ fontFamily: "Inter, sans-serif", fontSize: 20, fontWeight: 500, color: "#15161C", lineHeight: "30px", letterSpacing: "-0.55px" }}>{p.title}</p>
-                  <p className="card-desc" style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#979899", lineHeight: "24px" }}>{p.desc}</p>
-                </div>
-              </>
-            );
-            const sharedStyle: React.CSSProperties = { padding: "32px 24px", borderBottom: "1px dashed #E4E5E5", display: "flex", flexDirection: "column", gap: 23 };
-            return href ? (
-              <Link key={p.name} href={href} className="work-card" style={{ ...sharedStyle, cursor: "pointer", textDecoration: "none", color: "inherit" }}>{cardContent}</Link>
-            ) : (
-              <div key={p.name} style={{ ...sharedStyle, cursor: activeTab === "work" ? "default" : "default" }}>{cardContent}</div>
-            );
-          })}
-
-          {/* Footer */}
-          <div className="projects-footer" style={{ padding: "31px 32px 42px 32px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <h2 className="font-display" style={{ fontSize: 32, color: "#15161C", letterSpacing: "0.02em" }}>
-                That&apos;s me 👋
-              </h2>
-              <Link
-                href="/"
-                className="link-blue"
-                style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 500, color: "#1C8AF8", textDecoration: "none", letterSpacing: "-0.02em" }}
-              >
-                Go to home page
-              </Link>
-            </div>
-          </div>
-
-        </main>
+      <div className="v2-projects-container">
+        <div className="v2-projects-grid">
+          {projects.map((p) => (
+            <Link key={p.name} href={p.href} className="v2-project-card">
+              <img src={p.image} alt={p.title} className="v2-project-card-media" />
+              <div className="v2-project-card-text">
+                <p className="v2-project-card-title">{p.title}</p>
+                <p className="v2-project-card-subtitle">{p.subtitle}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-

@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 1171276667">
+<rect width="64" height="64" rx="12" fill="url(#paint0_linear_0_59)"/>
+<g id="Vector">
+<path d="M46.1806 18H50V21.668H46.1806V18Z" fill="#A795F8"/>
+<path d="M46.4194 18.2292H49.7613V21.4387H46.4194V18.2292Z" fill="white"/>
+<path d="M42.338 21.3241H46.1573V24.9921H42.338V21.3241Z" fill="#A795F8"/>
+<path d="M42.5767 21.5534H45.9186V24.7628H42.5767V21.5534Z" fill="white"/>
+<path d="M28.2581 47C14.181 40.0079 21.1017 29.2332 42.3419 27.7431V24.9921H39.1154V21.3241H42.3419V18.1146C15.7213 20.4071 -0.629723 45.0514 28.2581 47Z" fill="white"/>
+<path d="M46.7541 37.0277C35.8669 42.3506 26.0774 43.6956 20.9452 39.3399C21.4257 42.4024 23.7186 44.8221 28.1348 47C36.1315 46.7708 42.8154 42.9881 46.7541 37.0277Z" fill="#A795F8"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_59" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+<stop stop-color="#A08EF0"/>
+<stop offset="1" stop-color="#100C57"/>
+</linearGradient>
+</defs>
+</svg>

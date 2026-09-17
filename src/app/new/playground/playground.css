@@ -1,0 +1,120 @@
+/* Minimal v2-styled placeholder for /new/playground — TopNav already
+   links here (see TopNav.tsx), so this exists to give that tab a real
+   destination instead of falling through to the site's 404 page. Mirrors
+   the not-found page's centered-card pattern for visual consistency
+   between the two "nothing here yet" states. */
+
+.v2-playground-page {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  background: #f8f8f8;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* TopNav is portaled straight into <body> (outside ScrollSmoother's
+   #smooth-content, so its transform can't drag a fixed nav around — see
+   the Octo Proxies case study), so this can't be scoped under
+   `.v2-playground-page` — by the time this renders, the portal wrapper is
+   a sibling of `.v2-playground-page`, not a descendant. */
+.v2-playground-nav-portal .v2-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.v2-playground-card {
+  width: 100%;
+  max-width: 1020px;
+  height: 520px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  text-align: center;
+  padding: 24px;
+}
+
+.v2-playground-mascot {
+  display: block;
+  width: 140px;
+  height: 88px;
+}
+
+.v2-playground-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -2px;
+  color: #15161c;
+}
+
+.v2-playground-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-playground-text p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+}
+
+/* Same hand-drawn underline as the hero card's @torchproxies/@prifina
+   links (.v2-hero-link on /new) and the 404 page's home link. */
+.v2-playground-text a {
+  position: relative;
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+  text-decoration: none;
+  padding-bottom: 3px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 15 2, 25 7, 38 4 S 62 2, 75 5 S 100 6, 118 4' stroke='%2315161c' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+}
+
+.v2-playground-text a:hover,
+.v2-playground-text a:focus-visible {
+  /* globals.css has a site-wide `a:hover { color: #1C8AF8 !important; }`
+     from the old design that would otherwise win here. */
+  color: #15161c !important;
+  background-size: 100% 6px;
+}
+
+@media (max-width: 640px) {
+  .v2-playground-card {
+    height: auto;
+    min-height: 420px;
+  }
+
+  .v2-playground-mascot {
+    width: 100px;
+    height: 63px;
+  }
+
+  .v2-playground-heading {
+    font-size: 32px;
+  }
+}

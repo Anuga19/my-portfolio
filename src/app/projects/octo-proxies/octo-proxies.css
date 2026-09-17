@@ -1,0 +1,414 @@
+/* Every frame named "img-*" in the Figma file was exported and used as one
+   flattened image (several are otherwise unreconstructible — one is a live
+   WebGPU shader effect, others are precise multi-layer line/vector
+   compositions) rather than rebuilt with CSS, per the source design's own
+   naming convention marking which frames are meant to be images. */
+
+.octo-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  box-sizing: border-box;
+  padding: 202px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Single shared column every section lives inside, so every block —
+   whether it's 1020px wide (images) or 815px wide (some text sections) —
+   starts at the exact same left edge instead of each being independently
+   centered by its own width (which was the original bug: a 815px-wide
+   text block centered on its own sits to the right of a 1020px image
+   block's left edge, breaking the left-aligned column the design uses).
+   At the 1440px reference width this centers with ~210px on each side,
+   same as the design; it holds close to that on nearby viewport widths
+   and simply grows the side margins further on very wide screens. */
+.octo-container {
+  width: 100%;
+  max-width: 1020px;
+}
+
+/* ── BREADCRUMB NAV ──
+   A different, case-study-specific nav (not the shared TopNav) — fixed
+   while scrolling like every other non-homepage nav on this site. */
+.octo-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 4px;
+}
+
+.octo-nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  text-decoration: none;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 16.8px;
+}
+
+.octo-nav-home img {
+  display: block;
+  width: 15.2px;
+  height: 16px;
+}
+
+.octo-nav-current {
+  padding: 10px 16px;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  letter-spacing: -0.528px;
+  line-height: 16.8px;
+}
+
+/* Text sections narrower than the shared 1020px column — left-aligned
+   inside it (default block behavior), never independently centered. */
+.octo-content {
+  width: 100%;
+  max-width: 815px;
+  box-sizing: border-box;
+}
+
+/* ── HEADINGS / PARAGRAPHS (shared by every text section) ── */
+.octo-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.octo-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.octo-paragraphs p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+/* ── TITLE BLOCK ── */
+.octo-title-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 37px;
+}
+
+.octo-title-row {
+  display: flex;
+  gap: 190px;
+  align-items: flex-start;
+}
+
+.octo-title-main {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 625px;
+}
+
+.octo-title-main .octo-paragraphs {
+  margin-top: 24px;
+  gap: 37px;
+}
+
+.octo-title-meta {
+  flex: 0 0 115px;
+  display: flex;
+  flex-direction: column;
+  gap: 61px;
+}
+
+.octo-title-meta-role .octo-heading {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.octo-title-meta p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+/* ── IMAGE BLOCKS (all the "img-*" exports) ── */
+.octo-img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.octo-img-cover {
+  margin-top: 84px;
+}
+
+.octo-section-the-idea {
+  margin-top: 110px;
+}
+
+.octo-logo-row {
+  margin-top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.octo-logo-row .octo-img-logo-2-3 {
+  display: flex;
+  gap: 20px;
+}
+
+.octo-logo-row .octo-img-logo-2-3 img {
+  width: 500px;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 16px;
+}
+
+.octo-section-visual-pillars {
+  margin-top: 110px;
+}
+
+.octo-brand-block {
+  margin-top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.octo-brand-row-1 {
+  display: flex;
+  gap: 20px;
+}
+
+.octo-brand-row-1 .octo-brand-1 {
+  width: 333px;
+  flex-shrink: 0;
+  border-radius: 16px;
+}
+
+.octo-brand-row-1 .octo-brand-2-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 315px;
+  flex-shrink: 0;
+}
+
+.octo-brand-row-1 .octo-brand-2-3 img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.octo-brand-row-1 .octo-brand-4 {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 16px;
+}
+
+.octo-brand-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  height: 506px;
+}
+
+.octo-brand-row-2 .octo-brand-5 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.octo-brand-row-2 .octo-brand-6 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.octo-brand-row-2 .octo-brand-7 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.octo-brand-row-2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.octo-section-digital-world {
+  margin-top: 110px;
+}
+
+.octo-img-landing-page {
+  margin-top: 90px;
+}
+
+/* ── STORY IMAGES ── */
+.octo-story-row {
+  margin-top: 21px;
+  display: flex;
+  gap: 20px;
+}
+
+.octo-story-row img {
+  width: 240px;
+  height: 520px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── DIVIDER + NEXT PROJECT ── */
+.octo-divider {
+  margin-top: 172px;
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+.octo-next-project-heading {
+  margin-top: 43px;
+}
+
+/* ── NEXT PROJECT CARD ──
+   Deliberately the same card used for Jink Host in the homepage's card
+   stack (same image, same title copy, same .v2-project-card-style
+   overlay) rather than a bespoke composition, so this "next project"
+   link looks identical to the card it's actually pointing at. */
+.octo-next-card {
+  margin-top: 23px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1020 / 520;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.octo-next-card-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 45%);
+}
+
+.octo-next-card-caption {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.octo-next-card-caption .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .octo-title-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .octo-title-main {
+    max-width: none;
+  }
+
+  .octo-title-meta {
+    flex-direction: row;
+    gap: 48px;
+  }
+
+  .octo-logo-row .octo-img-logo-2-3,
+  .octo-brand-row-1 {
+    flex-direction: column;
+  }
+
+  .octo-brand-row-1 .octo-brand-1,
+  .octo-brand-row-1 .octo-brand-2-3,
+  .octo-logo-row .octo-img-logo-2-3 img {
+    width: 100%;
+  }
+
+  .octo-brand-row-2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    height: auto;
+  }
+
+  .octo-brand-row-2 .octo-brand-6 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .octo-brand-row-2 .octo-brand-7 {
+    grid-row: 3;
+  }
+
+  .octo-brand-row-2 img {
+    height: 320px;
+  }
+
+  .octo-story-row {
+    flex-wrap: wrap;
+  }
+
+  .octo-story-row img {
+    width: calc(50% - 10px);
+    height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .octo-page {
+    padding-top: 150px;
+  }
+
+  .octo-heading {
+    font-size: 20px;
+  }
+
+  .octo-next-card-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+}

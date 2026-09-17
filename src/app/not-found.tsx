@@ -1,26 +1,40 @@
-import Sidebar from "@/components/Sidebar";
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import TopNav from "@/components/v2/TopNav";
+import "./not-found.css";
 
 export default function NotFound() {
+  // SSR-safe portal mount gate — see the Octo Proxies case study for the
+  // full explanation of why a `typeof document` branch would break
+  // hydration here instead.
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- standard SSR-safe portal mount gate (see comment above)
+  useEffect(() => setMounted(true), []);
+
   return (
-    <div className="page-wrapper">
-      <div className="page-inner">
-        <Sidebar />
-        <main className="page-main" style={{ padding: "67px 24px", display: "flex", flexDirection: "column" }}>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, color: "#697282", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>404</p>
-          <h1 className="font-display" style={{ fontSize: 40, color: "#15161C", letterSpacing: "0.02em", lineHeight: 1.1, marginBottom: 16 }}>
-            Page not found
-          </h1>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 400, color: "#697282", lineHeight: "23px", marginBottom: 32 }}>
-            The page you're looking for doesn't exist or has been moved.
-          </p>
-          <Link
-            href="/"
-            style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 500, color: "#1C8AF8", textDecoration: "none", letterSpacing: "-0.02em" }}
-          >
-            Go to home page →
-          </Link>
-        </main>
+    <div className="v2-404-page">
+      {/* Portaled into <body>, outside ScrollSmoother's #smooth-content —
+          see the Octo Proxies case study for why a fixed nav needs this.
+          Also sidesteps SmoothScroll/ClickSound's pathname-prefix exclusion
+          lists, which can't match this page since it renders for whatever
+          arbitrary broken URL the visitor landed on. */}
+      {mounted && createPortal(
+        <div className="v2-404-nav-portal">
+          <TopNav />
+        </div>,
+        document.body
+      )}
+
+      <div className="v2-404-card">
+        <img src="/images/new/mascot-yellow.svg" alt="" className="v2-404-mascot" />
+        <h1 className="v2-404-heading">Page Not Found...</h1>
+        <div className="v2-404-text">
+          <p>The page you&apos;re looking for doesn&apos;t exist or has been moved.</p>
+          <Link href="/new">Go to Home Page</Link>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,347 @@
+/* Re-skin of the Jink Host landing-page case study to match the new
+   case-study design system (same pattern as Octo Proxies / Eyonic / Torch
+   Proxies): fixed breadcrumb nav, single left-aligned 1020px column, the
+   same heading/paragraph type scale. Only the text and image assets carry
+   over from the old page. */
+
+.jh2-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  box-sizing: border-box;
+  padding: 202px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.jh2-container {
+  width: 100%;
+  max-width: 1020px;
+}
+
+/* ── BREADCRUMB NAV ── */
+.jh2-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 4px;
+}
+
+.jh2-nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  text-decoration: none;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 16.8px;
+}
+
+.jh2-nav-home img {
+  display: block;
+  width: 15.2px;
+  height: 16px;
+}
+
+.jh2-nav-current {
+  padding: 10px 16px;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  letter-spacing: -0.528px;
+  line-height: 16.8px;
+}
+
+/* ── TYPE SCALE (shared across every section) ── */
+.jh2-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.jh2-subheading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: #15161c;
+}
+
+.jh2-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.jh2-paragraphs p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.jh2-paragraphs strong {
+  font-weight: 500;
+}
+
+/* ── TITLE BLOCK (icon, then a title+team two-column row) ── */
+.jh2-title-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 37px;
+  border-radius: 16px;
+}
+
+.jh2-title-row {
+  display: flex;
+  gap: 190px;
+  align-items: flex-start;
+}
+
+.jh2-title-main {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 625px;
+}
+
+.jh2-title-main .jh2-paragraphs {
+  margin-top: 24px;
+}
+
+.jh2-title-meta {
+  flex: 0 0 205px;
+}
+
+.jh2-title-meta .jh2-heading {
+  margin-bottom: 24px;
+}
+
+.jh2-role-list p,
+.jh2-title-meta .date {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.jh2-title-meta .date {
+  margin-top: 29px;
+}
+
+/* ── HERO ── */
+.jh2-img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.jh2-img-hero {
+  margin-top: 84px;
+}
+
+/* ── SECTION SPACING ── */
+.jh2-section {
+  margin-top: 110px;
+}
+
+.jh2-section .jh2-img {
+  margin-top: 32px;
+}
+
+.jh2-section .jh2-img + .jh2-paragraphs,
+.jh2-section .jh2-callout + .jh2-paragraphs,
+.jh2-section .jh2-list + .jh2-paragraphs {
+  margin-top: 32px;
+}
+
+.jh2-section .jh2-callout,
+.jh2-section .jh2-list {
+  margin-top: 32px;
+}
+
+/* ── CALLOUT BOX ── */
+.jh2-callout {
+  background: #f8f8f8;
+  border-radius: 16px;
+  padding: 24px 32px;
+}
+
+.jh2-callout p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #15161c;
+}
+
+/* ── BULLET LIST ── */
+.jh2-list {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jh2-list li {
+  position: relative;
+  padding-left: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.jh2-list li strong {
+  font-weight: 500;
+}
+
+.jh2-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #15161c;
+}
+
+/* ── CTA BUTTON ── */
+.jh2-cta-button {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  background: #15161c;
+  border-radius: 100px;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+  color: #ffffff;
+}
+
+/* ── DIVIDER + NEXT PROJECT ── */
+.jh2-divider {
+  margin-top: 172px;
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+.jh2-next-project-heading {
+  margin-top: 43px;
+}
+
+.jh2-next-card {
+  margin-top: 24px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1020 / 520;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.jh2-next-card-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 45%);
+}
+
+.jh2-next-card-caption {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jh2-next-card-caption .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.jh2-next-card-caption .subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.32px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .jh2-title-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .jh2-title-main {
+    max-width: none;
+  }
+
+  .jh2-title-meta {
+    flex: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .jh2-page {
+    padding-top: 150px;
+  }
+
+  .jh2-heading {
+    font-size: 20px;
+  }
+
+  .jh2-next-card-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+}

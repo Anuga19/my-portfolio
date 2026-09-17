@@ -1,0 +1,398 @@
+/* Frames named "eyoni-img-*" in the Figma file were exported and used as one
+   flattened image each (the cover bakes in a live dashboard + popup card,
+   the process diagram and the factory-visit collage are both multi-layer
+   compositions) rather than rebuilt with CSS, matching the same convention
+   used for the Octo Proxies case study. */
+
+.eyo-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: #ffffff;
+  box-sizing: border-box;
+  padding: 202px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Single shared column every section lives inside, so every block shares
+   the same left edge instead of each being independently centered by its
+   own width — same reasoning as the Octo Proxies page. */
+.eyo-container {
+  width: 100%;
+  max-width: 1020px;
+}
+
+/* ── BREADCRUMB NAV ── */
+.eyo-nav {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 4px;
+}
+
+.eyo-nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  text-decoration: none;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 16.8px;
+}
+
+.eyo-nav-home img {
+  display: block;
+  width: 15.2px;
+  height: 16px;
+}
+
+.eyo-nav-current {
+  padding: 10px 16px;
+  color: #697282;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  letter-spacing: -0.528px;
+  line-height: 16.8px;
+}
+
+/* ── HEADINGS / PARAGRAPHS (shared by every text section) ── */
+.eyo-heading {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #15161c;
+}
+
+.eyo-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.eyo-paragraphs p {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.eyo-paragraphs strong {
+  font-weight: 500;
+}
+
+/* ── TITLE BLOCK ── */
+.eyo-title-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 37px;
+}
+
+.eyo-title-row {
+  display: flex;
+  gap: 190px;
+  align-items: flex-start;
+}
+
+.eyo-title-main {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 625px;
+}
+
+.eyo-title-main .eyo-paragraphs {
+  margin-top: 24px;
+  gap: 37px;
+}
+
+.eyo-title-meta {
+  flex: 0 0 205px;
+}
+
+.eyo-title-meta .eyo-heading {
+  margin-bottom: 24px;
+}
+
+.eyo-role-list p,
+.eyo-title-meta .date {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.eyo-title-meta .date {
+  margin-top: 29px;
+}
+
+/* ── IMAGE BLOCKS ── */
+.eyo-img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.eyo-img-cover {
+  margin-top: 64px;
+}
+
+.eyo-section-problem {
+  margin-top: 102px;
+}
+
+.eyo-section-business-problem {
+  margin-top: 73px;
+}
+
+.eyo-goal-label {
+  margin: 110px 0 0;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #8c8c8c;
+}
+
+.eyo-goal-heading {
+  margin: 13px 0 0;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 28px;
+  line-height: 48px;
+  font-weight: 500;
+  letter-spacing: -0.56px;
+  color: #000000;
+}
+
+.eyo-section-process {
+  margin-top: 110px;
+}
+
+.eyo-img-process {
+  margin-top: 69px;
+  background: #f8f8f8;
+  padding: 28px 12px;
+  box-sizing: border-box;
+}
+
+.eyo-section-research {
+  margin-top: 90px;
+}
+
+.eyo-img-factoryvisit {
+  margin-top: 74px;
+}
+
+/* ── CTA PREVIEW BANNER ── */
+.eyo-cta-banner {
+  margin-top: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 121px;
+  padding: 0 32px;
+  box-sizing: border-box;
+  background: #f8f8f8;
+  border-radius: 16px;
+}
+
+.eyo-cta-left {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+  min-width: 0;
+}
+
+.eyo-cta-sticker {
+  display: block;
+  width: 76px;
+  height: 67.49px;
+  flex-shrink: 0;
+}
+
+.eyo-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.eyo-cta-text .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #000000;
+}
+
+.eyo-cta-text .subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  color: #8c8c8c;
+}
+
+.eyo-cta-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #191919;
+  color: #f8f8f8;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  font-weight: 500;
+  line-height: 16.8px;
+  white-space: nowrap;
+}
+
+/* ── DIVIDER + NEXT PROJECT ── */
+.eyo-divider {
+  margin-top: 58px;
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+.eyo-next-project-heading {
+  margin-top: 43px;
+}
+
+/* ── NEXT PROJECT CARD ──
+   The same card used for Octo Proxies in the homepage's card stack (same
+   image, same title/subtitle overlay), rather than rebuilding the design's
+   bespoke dithered preview panel. */
+.eyo-next-card {
+  margin-top: 24px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1020 / 520;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.eyo-next-card-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 45%);
+}
+
+.eyo-next-card-caption {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eyo-next-card-caption .title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.eyo-next-card-caption .subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.32px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .eyo-title-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .eyo-title-main {
+    max-width: none;
+  }
+
+  .eyo-title-meta {
+    flex: none;
+  }
+
+  .eyo-cta-banner {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .eyo-cta-button {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .eyo-page {
+    padding-top: 150px;
+  }
+
+  .eyo-heading {
+    font-size: 20px;
+  }
+
+  .eyo-goal-heading {
+    font-size: 22px;
+    line-height: 36px;
+  }
+
+  .eyo-cta-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .eyo-next-card-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+}

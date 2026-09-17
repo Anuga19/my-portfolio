@@ -24,6 +24,10 @@ export default function CaseStudyToc({
   const [hasHistory, setHasHistory] = useState(false);
 
   useEffect(() => {
+    // Bootstrapping from a browser-only signal that isn't available during
+    // SSR — see the same pattern used across the v2 pages' portal mount
+    // gates for the full rationale.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasHistory(window.history.length > 1);
   }, []);
 
@@ -38,6 +42,10 @@ export default function CaseStudyToc({
   };
 
   useEffect(() => {
+    // Bootstrapping from a browser-only signal that isn't available during
+    // SSR — see the same pattern used across the v2 pages' portal mount
+    // gates for the full rationale.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

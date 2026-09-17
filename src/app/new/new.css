@@ -1,0 +1,788 @@
+/* Nav, the card stack, and the footer are direct flex children here so a
+   fixed gap holds between each of them regardless of viewport height —
+   previously nav/footer were pinned to fixed page-edge offsets while the
+   card centered independently, so the gap between them was whatever fell
+   out of that specific viewport height, not a guaranteed value.
+   No uniform `gap` here — top and bottom need different values (see
+   .v2-nav's margin-bottom and .v2-stack-outer's padding-bottom below),
+   since the peeking cards behind the active one visually extend well past
+   the nominal card box on the bottom side only. */
+.v2-page {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── CURSOR TAG ── */
+/* Grows from a small dot into a full pill (max-width transition, which
+   animates smoothly up to the label's natural size and then just holds),
+   then fades the label in a beat after the pill has started expanding. */
+.v2-cursor-tag {
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 12px;
+  background: #ff4d00;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 9999;
+  max-width: 40px;
+  opacity: 0;
+  transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
+  will-change: transform, max-width;
+}
+
+.v2-cursor-tag.visible {
+  opacity: 1;
+}
+
+.v2-cursor-tag.expanded {
+  max-width: 400px;
+}
+
+.v2-cursor-tag-text {
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.v2-cursor-tag.expanded .v2-cursor-tag-text {
+  opacity: 1;
+  transition-delay: 0.15s;
+}
+
+/* ── NAV ── */
+/* Base .v2-nav/.v2-nav-link styling lives in TopNav.css, co-located with
+   the shared TopNav component (also used on /about) — this page only adds
+   its own spacing override. */
+.v2-nav {
+  margin-bottom: 32px;
+}
+
+/* ── STACK ── */
+.v2-stack-outer {
+  touch-action: none;
+  /* The second peek card sits at translateY(12vh) scale(0.8); scaling
+     shrinks it toward its own center (pulling its bottom edge up by half
+     the shrink) while the translate pushes it down — net effect, its
+     visual bottom edge sits (12vh − 0.1 × cardHeight) below the card box's
+     own bottom edge. Reserving exactly that (via the same min(64vh,520px)
+     card-height formula used everywhere else) plus the requested 32px
+     guarantees the footer never overlaps the peeking cards, at any
+     viewport height — a fixed px guess would either overlap on tall
+     screens (where 12vh keeps growing) or waste space on short ones. */
+  padding-bottom: calc(max(12vh - 0.1 * min(64vh, 520px), 0px) + 32px);
+}
+
+.v2-stack-viewport {
+  position: relative;
+  width: min(90vw, 1020px);
+  height: min(64vh, 520px);
+}
+
+/* Default to "hidden, behind" — GSAP only sets each card's real inline
+   opacity/z-index once CardStack's useLayoutEffect runs on hydration, so
+   without a safe default here, the raw server-rendered HTML paints every
+   card at opacity:1 with implicit DOM-order stacking, meaning the LAST
+   card (stickers) briefly covers the hero card on first paint, before JS
+   has had a chance to run. first-child (the active slot-0 card, always
+   the hero) is the one exception. */
+.v2-stack-card {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.v2-stack-card:first-child {
+  opacity: 1;
+  z-index: 10;
+}
+
+.v2-stack-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  border-radius: 16px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.v2-card {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  /* Forces its own compositing layer and stacking context — without this,
+     backdrop-filter on a descendant silently under-renders when its
+     ancestor chain combines overflow:hidden + border-radius + a transform
+     (the GSAP stack animation applies one to .v2-stack-card above this). */
+  transform: translateZ(0);
+  isolation: isolate;
+  will-change: transform;
+}
+
+/* ── HERO CARD ── */
+.v2-hero-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 52px 40px;
+  box-sizing: border-box;
+}
+
+/* ── HERO ENTRANCE ──
+   Text (name, headline, sub line) fades/slides up first in a quick
+   cascade; the mascots don't start popping in until that cascade is
+   already underway, so the headline visibly reads before the faces
+   join it, rather than everything materializing at once. The mascots'
+   own continuous float loop (below) runs the whole time on the inner
+   <img> — only the outer wrap animates the entrance — so once a mascot
+   pops in it's already gently bobbing, not starting flat-footed. */
+@keyframes v2-hero-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes v2-mascot-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.v2-hero-name {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  color: #8c8c8c;
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+  margin: 0 0 52px;
+  opacity: 0;
+  animation: v2-hero-fade-up 0.5s ease-out both;
+}
+
+.v2-hero-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 86px;
+}
+
+.v2-heading-line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: clamp(24px, 3.333vw, 48px); /* 48px at the 1440px reference frame */
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #15161c;
+  white-space: nowrap;
+  opacity: 0;
+  animation: v2-hero-fade-up 0.5s ease-out both;
+}
+
+.v2-heading-line-1,
+.v2-heading-line-2 {
+  gap: 8px;
+}
+
+.v2-heading-line-1 {
+  animation-delay: 0.08s;
+}
+
+.v2-heading-line-2 {
+  animation-delay: 0.16s;
+}
+
+.v2-mascot-wrap {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: v2-mascot-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.v2-mascot-wrap-yellow {
+  animation-delay: 0.45s;
+}
+
+.v2-mascot-wrap-green {
+  animation-delay: 0.55s;
+}
+
+.v2-mascot-wrap-blue {
+  animation-delay: 0.65s;
+}
+
+.v2-mascot {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Native asset pixel sizes at the 1020px-wide card reference — Figma applies
+   no extra scaling to these groups, only rotation. */
+.v2-mascot-yellow {
+  width: 97px;
+  height: 96.4px;
+  animation: v2-float-yellow 3s ease-in-out infinite;
+}
+
+.v2-mascot-green {
+  width: 88.4px;
+  height: 72px;
+  animation: v2-float-green 3.4s ease-in-out infinite;
+  animation-delay: -0.6s;
+}
+
+.v2-mascot-blue {
+  width: 100.1px;
+  height: 63px;
+  animation: v2-float-blue 2.8s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+
+@keyframes v2-float-yellow {
+  0%,
+  100% {
+    transform: rotate(5.78deg) translateY(0);
+  }
+  50% {
+    transform: rotate(5.78deg) translateY(-6px);
+  }
+}
+
+@keyframes v2-float-green {
+  0%,
+  100% {
+    transform: rotate(-12.26deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-12.26deg) translateY(-6px);
+  }
+}
+
+@keyframes v2-float-blue {
+  0%,
+  100% {
+    transform: rotate(-11.53deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-11.53deg) translateY(-6px);
+  }
+}
+
+.v2-hero-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  color: #8c8c8c;
+  letter-spacing: -0.32px;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  animation: v2-hero-fade-up 0.5s ease-out both;
+  animation-delay: 0.24s;
+}
+
+.v2-hero-sub .current,
+.v2-hero-sub .previous {
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Hand-drawn-style underline: an inline SVG squiggle (not a straight
+   line, for the sketchy feel) as a background image, revealed left-to-
+   right via background-size on hover rather than a plain CSS
+   text-decoration underline. */
+.v2-hero-link {
+  position: relative;
+  color: inherit;
+  font-weight: 400;
+  text-decoration: none;
+  padding-bottom: 3px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 15 2, 25 7, 38 4 S 62 2, 75 5 S 100 6, 118 4' stroke='%2315161c' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+}
+
+.v2-hero-link:hover,
+.v2-hero-link:focus-visible {
+  /* globals.css has a site-wide `a:hover { color: #1C8AF8 !important; }`
+     from the old design that would otherwise win here. */
+  color: #15161c !important;
+  background-size: 100% 6px;
+}
+
+/* ── PROJECT CARD ── */
+/* Every project card (Eyonic, Torch Proxies, Octo Proxies, Jink Host,
+   Tikiri Toys) uses the same shape now: a single pre-composited background
+   image — glow/screenshot/blur already baked in by design, nothing built
+   here in CSS — with title (+ optional subtitle) overlaid at the bottom,
+   42px from the left and bottom edges. */
+.v2-project-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.v2-project-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.v2-project-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 45%);
+}
+
+.v2-project-caption {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.v2-project-title {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.v2-project-subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.32px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── STICKER CARD (last card of the stack) ── */
+/* Positions below are converted from the exact px coordinates in the Figma
+   frame (1020x520 reference, node 715:1728/1745) to percentages of the
+   card box — same percentage-of-reference-card technique used elsewhere in
+   this file, so the Figma spacing holds exactly at the 1020x520 cap and
+   degrades gracefully at other viewport sizes instead of a fixed-px
+   layout overflowing a narrower/shorter card. Left/diameter are % of
+   width, top is % of height; the circle itself uses aspect-ratio so it
+   never stretches into an ellipse when the card's width:height ratio
+   drifts from 1020:520. */
+.v2-sticker-card {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background: #3442ac;
+}
+
+.v2-sticker-title {
+  position: absolute;
+  left: 50%;
+  top: 7.308%; /* 38px / 520px */
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.v2-sticker-slot {
+  position: absolute;
+  width: 14.902%; /* 152px / 1020px */
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Plain CSS `border-style: dashed` has no way to set an exact dash/gap
+   length — the browser picks its own pattern — so the empty placeholder
+   ring is drawn as an SVG stroke instead, which lets the gap match the
+   Figma spec (11px) exactly. */
+.v2-sticker-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: v2-sticker-scale-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.v2-sticker-slot-1 {
+  left: 14.118%; /* 144px / 1020px */
+  top: 15.769%; /* 82px / 520px */
+}
+
+.v2-sticker-slot-2 {
+  left: 43.235%; /* 441px / 1020px */
+  top: 17.308%; /* 90px / 520px */
+}
+
+.v2-sticker-slot-3 {
+  left: 70.98%; /* 724px / 1020px */
+  top: 18.462%; /* 96px / 520px */
+}
+
+.v2-sticker-slot-4 {
+  left: 28.627%; /* 292px / 1020px */
+  top: 49.038%; /* 255px / 520px */
+}
+
+.v2-sticker-slot-5 {
+  left: 56.373%; /* 575px / 1020px */
+  top: 49.808%; /* 259px / 520px */
+}
+
+.v2-sticker-img {
+  max-width: 145%;
+  max-height: 145%;
+  animation: v2-sticker-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes v2-sticker-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* All five stickers get `.is-resetting` at once from StickerCard's
+   `resetting` state, so they scale out together on reset; the placeholder
+   circle that replaces each one (`.v2-sticker-placeholder` above) scales
+   in the moment it mounts. */
+.v2-sticker-img.is-resetting {
+  animation: v2-sticker-scale-out 350ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes v2-sticker-scale-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes v2-sticker-scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.v2-sticker-reset:disabled {
+  cursor: default;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.v2-sticker-caption {
+  position: absolute;
+  left: 50%;
+  top: 85.385%; /* 444px / 520px */
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: rgba(255, 255, 255, 0.56);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.v2-sticker-reset {
+  font: inherit;
+  letter-spacing: inherit;
+  color: #ffffff;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.v2-sticker-social {
+  position: absolute;
+  left: 50%;
+  top: 90%; /* 468px / 520px */
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+.v2-sticker-social-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v2-sticker-social-item a {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.v2-sticker-divider {
+  display: block;
+  width: 1px;
+  height: 17px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── FOOTER ── */
+.v2-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Every .v2-stack-card is `position: absolute; inset: 0`, sized to the
+     full stack viewport rather than to its visible art — GSAP only moves
+     it via `transform`, which carries the hit-box along with it, but the
+     active (slot-0) card's untransformed box still exactly covers the
+     viewport rect it sits in. Without its own stacking context, .v2-footer
+     had no defined priority over that invisible box wherever the two
+     happened to overlap on screen — a card's Link could silently win a
+     click meant for "See All Projects". Raising the footer above the
+     stack's own max z-index (10) settles that regardless of any future
+     positioning tweak on the card side. */
+  position: relative;
+  z-index: 30;
+}
+
+.v2-page-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0px;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 5px;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+}
+
+.v2-page-indicator .current {
+  font-weight: 500;
+  line-height: 17px;
+  color: #15161c;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 10px 16px;
+}
+
+.v2-page-indicator .total {
+  font-weight: 400;
+  line-height: 17px;
+  color: #697282;
+  padding: 10px 16px;
+}
+
+.v2-cta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 15px 21px;
+  font-family: "Inter", sans-serif;
+  font-size: 13.2px;
+  line-height: 17px;
+  font-weight: 500;
+  color: #15161c;
+  text-decoration: none;
+}
+
+.v2-cta-pill:hover {
+  color: #15161c !important;
+}
+
+/* ── HIDDEN FOOTER (easter egg) ──
+   A thin dev-changelog-style status bar, hidden below .v2-page's bottom
+   edge by default and slid up into view once CardStack's lap counter
+   reaches two full forward loops of the deck. */
+.v2-hidden-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 32px;
+  background: #15161c;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.v2-hidden-footer.revealed {
+  transform: translateY(0);
+}
+
+.v2-hidden-footer-left,
+.v2-hidden-footer-right,
+.v2-hidden-footer-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  color: #8c8c8c;
+  white-space: nowrap;
+}
+
+.v2-hidden-footer-left,
+.v2-hidden-footer-right {
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+
+.v2-hidden-footer-left {
+  left: 34px;
+}
+
+.v2-hidden-footer-right {
+  right: 34px;
+}
+
+.v2-hidden-footer-center {
+  left: 50%;
+  top: calc(50% + 0.5px);
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  letter-spacing: -0.24px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  /* Only room for one message at this width — the side text would overlap
+     the centered "Bingo!" line, so it's the one that stays. */
+  .v2-hidden-footer-left,
+  .v2-hidden-footer-right {
+    display: none;
+  }
+
+  .v2-hero-name {
+    font-size: 13px;
+  }
+
+  .v2-heading-line {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  .v2-mascot-yellow {
+    width: 56px;
+    height: 55.7px;
+  }
+
+  .v2-mascot-green {
+    width: 51px;
+    height: 41.6px;
+  }
+
+  .v2-mascot-blue {
+    width: 58px;
+    height: 36.5px;
+  }
+
+  .v2-hero-sub {
+    white-space: normal;
+    font-size: 13px;
+  }
+
+  .v2-page {
+    gap: 20px;
+  }
+
+  .v2-sticker-title {
+    font-size: 13px;
+  }
+
+  .v2-sticker-caption {
+    font-size: 13px;
+  }
+
+  .v2-sticker-social-item a {
+    font-size: 13px;
+  }
+}
