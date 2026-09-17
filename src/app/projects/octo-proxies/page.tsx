@@ -9,7 +9,7 @@ const IMG = "/images/new/octo-case-study";
 
 const nav = (
   <nav className="octo-nav">
-    <Link href="/new" className="octo-nav-home">
+    <Link href="/" className="octo-nav-home">
       <img src={`${IMG}/anuga-icon.svg`} alt="" />
       Anuga
     </Link>

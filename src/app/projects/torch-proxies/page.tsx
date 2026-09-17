@@ -9,7 +9,7 @@ const IMG = "/images/torch-proxies";
 
 const nav = (
   <nav className="tp2-nav">
-    <Link href="/new" className="tp2-nav-home">
+    <Link href="/" className="tp2-nav-home">
       <img src="/images/new/octo-case-study/anuga-icon.svg" alt="" />
       Anuga
     </Link>

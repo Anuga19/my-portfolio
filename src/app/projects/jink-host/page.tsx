@@ -9,7 +9,7 @@ const IMG = "/images/jink-host-v2";
 
 const nav = (
   <nav className="jh2-nav">
-    <Link href="/new" className="jh2-nav-home">
+    <Link href="/" className="jh2-nav-home">
       <img src="/images/new/octo-case-study/anuga-icon.svg" alt="" />
       Anuga
     </Link>

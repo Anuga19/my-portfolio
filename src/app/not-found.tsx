@@ -33,7 +33,7 @@ export default function NotFound() {
         <h1 className="v2-404-heading">Page Not Found...</h1>
         <div className="v2-404-text">
           <p>The page you&apos;re looking for doesn&apos;t exist or has been moved.</p>
-          <Link href="/new">Go to Home Page</Link>
+          <Link href="/">Go to Home Page</Link>
         </div>
       </div>
     </div>

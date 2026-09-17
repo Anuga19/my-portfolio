@@ -6,9 +6,9 @@ import { useLayoutEffect, useRef, useState } from "react";
 import "./TopNav.css";
 
 const navLinks = [
-  { label: "Overview", href: "/new" },
+  { label: "Overview", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Playground", href: "/new/playground" },
+  { label: "Playground", href: "/playground" },
   { label: "Resume", href: "https://drive.google.com/file/d/1J4_3eJBHH76B3UYAkqFM_wXDfZRSeL1V/view", external: true },
 ];
 

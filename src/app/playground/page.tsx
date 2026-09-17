@@ -30,7 +30,7 @@ export default function Playground() {
         <h1 className="v2-playground-heading">Playground</h1>
         <div className="v2-playground-text">
           <p>This section is still being built. Check back soon.</p>
-          <Link href="/new">Go to Home Page</Link>
+          <Link href="/">Go to Home Page</Link>
         </div>
       </div>
     </div>

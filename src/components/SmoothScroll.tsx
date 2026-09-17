@@ -10,9 +10,10 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 // ScrollSmoother running underneath them. ScrollSmoother is built on GSAP's
 // Observer plugin internally, and it initializes globally regardless of
 // whether the page actually has scrollable height — a second, independent
-// Observer instance on the same page (e.g. the /new stack's wheel handling)
-// ends up competing with it for the same wheel/touch events on window, and
-// the result was intermittent "needs a nudge before the next scroll" input.
+// Observer instance on the same page (e.g. the homepage card stack's own
+// wheel handling) ends up competing with it for the same wheel/touch
+// events on window, and the result was intermittent "needs a nudge before
+// the next scroll" input.
 //
 // /about is excluded for a different reason: ScrollSmoother fakes smooth
 // scrolling by applying a `transform` to #smooth-content, and any
@@ -23,12 +24,19 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 // around it instead of opting out: its nav is rendered via a portal
 // straight into document.body, outside this transformed tree entirely,
 // so the rest of the page still gets ScrollSmoother's smooth scrolling.
-const SMOOTH_SCROLL_EXCLUDED_PREFIXES = ["/new", "/about"];
+//
+// The homepage ("/") needs an exact match rather than a prefix — unlike
+// every other entry here, "/" is also a *prefix* of every other route in
+// the app, so treating it as one would silently exclude the whole site.
+const SMOOTH_SCROLL_EXCLUDED_EXACT = ["/"];
+const SMOOTH_SCROLL_EXCLUDED_PREFIXES = ["/about"];
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   const smootherRef = useRef<ScrollSmoother | null>(null);
   const pathname = usePathname();
-  const excluded = SMOOTH_SCROLL_EXCLUDED_PREFIXES.some((prefix) => pathname?.startsWith(prefix));
+  const excluded =
+    SMOOTH_SCROLL_EXCLUDED_EXACT.includes(pathname ?? "") ||
+    SMOOTH_SCROLL_EXCLUDED_PREFIXES.some((prefix) => pathname?.startsWith(prefix));
 
   useEffect(() => {
     if (excluded) return;

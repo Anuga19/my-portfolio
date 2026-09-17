@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 
 // The v2 redesign (homepage stack, About, Projects index, case studies)
 // doesn't want the legacy click-sound effect — kept for the old site's
-// pages only. "/projects" is matched exactly rather than as a prefix so it
-// doesn't also swallow /projects/shield-proxies, which is still the old
-// (non-v2) case study page and should keep the click sound for now.
-const CLICK_SOUND_EXCLUDED_PREFIXES = ["/new", "/about", "/projects/octo-proxies", "/projects/eyonic", "/projects/torch-proxies", "/projects/jink-host"];
-const CLICK_SOUND_EXCLUDED_EXACT = ["/projects"];
+// pages only. "/projects" and "/" are matched exactly rather than as
+// prefixes: "/projects" as a prefix would also swallow
+// /projects/shield-proxies, which is still the old (non-v2) case study page
+// and should keep the click sound for now, and "/" as a prefix would match
+// every route in the app.
+const CLICK_SOUND_EXCLUDED_PREFIXES = ["/about", "/playground", "/projects/octo-proxies", "/projects/eyonic", "/projects/torch-proxies", "/projects/jink-host"];
+const CLICK_SOUND_EXCLUDED_EXACT = ["/", "/projects"];
 
 export default function ClickSound() {
   const ctxRef = useRef<AudioContext | null>(null);

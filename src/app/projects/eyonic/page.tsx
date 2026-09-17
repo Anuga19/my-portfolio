@@ -9,7 +9,7 @@ const IMG = "/images/new/eyonic-case-study";
 
 const nav = (
   <nav className="eyo-nav">
-    <Link href="/new" className="eyo-nav-home">
+    <Link href="/" className="eyo-nav-home">
       <img src={`${IMG}/anuga-icon.svg`} alt="" />
       Anuga
     </Link>
