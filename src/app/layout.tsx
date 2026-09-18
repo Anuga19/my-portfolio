@@ -21,11 +21,36 @@ const datatype = localFont({
   display: "swap",
 });
 
+const title = "Anuga - UI/UX Designer";
+const description = "Portfolio of Anuga Karunatilaka, UI/UX Designer crafting intentional digital experiences.";
+
 export const metadata: Metadata = {
-  title: "Anuga - UI/UX Designer",
-  description: "Portfolio of Anuga Karunatilaka, UI/UX Designer crafting intentional digital experiences.",
+  metadataBase: new URL("https://www.anugadesigns.site"),
+  title,
+  description,
   icons: {
     icon: "/new-favicon-3.svg",
+  },
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: title,
+    images: [
+      {
+        url: "/link-preview-image.png",
+        width: 2400,
+        height: 1260,
+        alt: title,
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/link-preview-image.png"],
   },
 };
 
