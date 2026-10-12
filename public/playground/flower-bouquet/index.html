@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
     <title>Bouquet Builder</title>
-    <script type="module" crossorigin src="/playground/flower-bouquet/assets/index-Dpdu5mEj.js"></script>
+    <script type="module" crossorigin src="/playground/flower-bouquet/assets/index-DpjAnODI.js"></script>
     <link rel="stylesheet" crossorigin href="/playground/flower-bouquet/assets/index-BXViivH7.css">
   </head>
   <body>
@@ -39,6 +39,9 @@
         <div class="send-form" id="send-form">
           <label for="send-email">Their email</label>
           <input id="send-email" type="email" autocomplete="off" placeholder="name@example.com" required />
+          <label for="send-from">Your email</label>
+          <input id="send-from" type="email" autocomplete="email" placeholder="you@example.com" required />
+          <input class="sr-only" id="send-website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <label for="send-text">Message <span class="count" id="send-count"></span></label>
           <textarea id="send-text" rows="3" placeholder="Write a few words to go under the bouquet"></textarea>
           <p class="error" id="send-error" role="alert"></p>
