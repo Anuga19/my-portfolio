@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
       { source: "/new/playground", destination: "/playground", permanent: true },
     ];
   },
+  // Bouquet Builder (github.com/Anuga19/flower-bouquet) is a separate
+  // static app. Its build is copied into public/playground/flower-bouquet,
+  // and this serves its index.html at the folder URL.
+  async rewrites() {
+    return [
+      { source: "/playground/flower-bouquet", destination: "/playground/flower-bouquet/index.html" },
+    ];
+  },
 };
 
 export default nextConfig;
