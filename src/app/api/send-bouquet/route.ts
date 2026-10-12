@@ -3,7 +3,8 @@
 // email, a short message and the bouquet link; Resend delivers it from an
 // address on this domain, with replies going to the sender.
 //
-// Needs RESEND_API_KEY in the Vercel project's environment variables, and
+// Needs the Resend API key in the Vercel project's environment variables
+// (named RESEND_API_KEY, or flower_bouquet_key as it was first added), and
 // anugadesigns.site verified as a sending domain in Resend.
 
 const FROM = process.env.BOUQUET_FROM ?? "Bouquet Builder <bouquet@anugadesigns.site>";
@@ -34,7 +35,7 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 const fail = (status: number, error: string) => Response.json({ ok: false, error }, { status });
 
 export async function POST(request: Request) {
-  const key = process.env.RESEND_API_KEY;
+  const key = process.env.RESEND_API_KEY ?? process.env.flower_bouquet_key;
   if (!key) return fail(503, "not_configured");
 
   let body: Record<string, unknown>;
